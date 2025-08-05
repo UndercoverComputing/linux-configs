@@ -19,7 +19,7 @@ Settings icon:
 - White when connected to a VPN via Network Manager
 - Pressing opens `nm-connection-editor`
 
-## Setup scripts
+## Setup scripts:
 1. Make a folder for the scripts: `mkdir -p ~/.config/waybar/scripts`
 2. Add the following scripts to the folder: `wifi-status.sh`, `ethernet-status.sh`, `vpn-status.sh`
 3. Set your Ethernet interface in `ethernet-status.sh` - replace enp0s25 with your interface. 
