@@ -1,1 +1,1 @@
-# Arch Linux .config files
+# Thinkpad X240 Arch Linux configuration
