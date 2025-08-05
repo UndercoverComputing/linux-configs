@@ -1,8 +1,6 @@
 # Waybar
 ## Original configuration:
-
 <a href="https://i.imgur.com/Qbj43Uz.png"><img src="https://i.imgur.com/Qbj43Uz.png" title="source: imgur.com" /></a>
-
 [Config and Style](https://github.com/cjbassi/config/tree/master/.config/waybar)
 
 ## Stuff changed:
