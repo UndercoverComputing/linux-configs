@@ -3,6 +3,35 @@
 <a href="https://i.imgur.com/Qbj43Uz.png"><img src="https://i.imgur.com/Qbj43Uz.png" title="source: imgur.com" /></a>
 [Config and Style](https://github.com/cjbassi/config/tree/master/.config/waybar)
 
+## Setup:
+Lots of examples are presented on the Waybar GitHub page https://github.com/Alexays/Waybar/wiki/Examples
+
+The easiest way to start is to find an example and modify it to your needs.
+
+First, create your waybar config directory:
+
+```
+mkdir ~/.config/waybar
+```
+
+Then, into that directory, download your chosen `config` and `style.css` files.
+
+We need to tell Sway to start using Waybar, so edit your config file:
+
+```
+nano ~/.config/sway/config
+
+# Comment out or delete entire bar section
+bar {
+  (...)
+}
+
+# Put this
+bar swaybar_command waybar
+```
+
+Reload Sway with `Shift + mod + c` to see your new status bar.
+
 ## Stuff changed:
 ### Network status icons:
 WiFi icon:
