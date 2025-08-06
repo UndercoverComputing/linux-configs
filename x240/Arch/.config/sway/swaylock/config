@@ -1,0 +1,18 @@
+daemonize
+show-failed-attempts
+clock
+image=/Pictures/M31_blur.jpg # Blurred picture of Andromeda Galaxy
+font="Inter"
+
+indicator
+indicator-radius=80
+indicator-thickness=10
+
+ring-color=1793D1
+key-hl-color=383c4a
+text-color=dde6ed
+line-color=100f36
+
+datestr=%a, %B %e
+timestr=%I:%M %p
+ignore-empty-password
