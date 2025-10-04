@@ -20,13 +20,13 @@ cp /etc/sway/config .config/sway/
 
 ### Terminal
 
-Install your preffered terminal emulator (foot, alacritty, whatever you want), I use alacritty:
+Install your preferred terminal emulator (foot, alacritty, whatever you want), I use alacritty:
 
 ```
 pacman -S alacritty
 ```
 
-Then edit your config file and change terminal executable
+Then edit your config file and change the terminal executable
 
 `nano ~/.config/sway/config`
 ```
@@ -34,7 +34,7 @@ Then edit your config file and change terminal executable
 set $term alacritty
 ```
 
-Now you can start `sway` and launch terminal by pressing `mod + Enter`
+Now you can start `sway` and launch the terminal by pressing `mod + Enter`
 
 I have my terminal windows a bit transparent:
 
@@ -49,7 +49,7 @@ Changes should be visible immediately.
 
 ### Popup command window
 
-Create direcotory for your AUR repos and clone sway launcher there:
+Create a directory for your AUR repos and clone the sway launcher there:
 
 ```
 mkdir -p ~/repos/AUR/
@@ -86,7 +86,7 @@ Install required packages:
 pacman -S swaylock swayidle
 ```
 
-Edit your sway config, the power off/on option will just turn off your display after longer period. Adjust the times (in seconds) as needed. The last option ensures our computer is locked upon entering suspended state.
+Edit your sway config, the power off/on option will just turn off your display after a longer period. Adjust the times (in seconds) as needed. The last option ensures our computer is locked upon entering suspended state.
 
 `nano ~/.config/sway/config`
 ```
@@ -96,7 +96,7 @@ exec swayidle -w \
          before-sleep 'swaylock -e -f -i ~/Pictures/lockscreen.jpg'
 ```
 
-Add option for manual locking, in my case I'm going for `mod + L`, same as on Windows:
+Add option for manual locking, in my case, I'm going for `mod + L`, same as on Windows:
 
 
 `nano ~/.config/sway/config`
@@ -109,7 +109,7 @@ Add option for manual locking, in my case I'm going for `mod + L`, same as on Wi
     bindsym $mod+l exec swaylock -e -f -i ~/Pictures/lockscreen.jpg -C ~/.config/swaylock/config
 ```
 
-This keystroke collides with another one, so comment them out. Don't worry, you can still change focus with arrow keys:
+This keystroke collides with another one, so comment them out. Don't worry, you can still change focus with the arrow keys:
 
 ```
 nano ~/.config/sway/config
