@@ -8,12 +8,19 @@ mkdir -p "$output_dir"
 timestamp=$(date +"%Y-%m-%d %H-%M-%S")
 outfile="$output_dir/Sway Screenshot from $timestamp.png"
 
-# Select area with slurp
-region=$(slurp)
-[ -z "$region" ] && exit 1
+# Freeze the screen, hide cursor, and run screenshot commands
+wayfreeze --hide-cursor --after-freeze-cmd "
+  region=\$(slurp)
+  if [ -z \"\$region\" ]; then
+    # Unfreeze if user cancels selection (e.g. presses Escape)
+    killall wayfreeze
+    exit 0
+  fi
 
-# Capture screenshot
-grim -g "$region" "$outfile"
+  grim -g \"\$region\" \"$outfile\"
+  wl-copy < \"$outfile\"
+  notify-send 'Screenshot Saved' '$outfile'
 
-# Copy to clipboard
-wl-copy < "$outfile"
+  # Always unfreeze after completion
+  killall wayfreeze
+"
