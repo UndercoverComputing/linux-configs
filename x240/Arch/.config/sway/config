@@ -274,3 +274,6 @@ bindsym $mod+minus exec nmcli con down VPN
 
 # Sleep keybind
 bindsym Ctrl+Alt+Delete exec systemctl suspend
+
+# GNOME Keyring
+exec_always --no-startup-id ~/.config/sway/scripts/start-keyring.sh
