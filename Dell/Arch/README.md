@@ -201,7 +201,7 @@ x-scheme-handler/https=firefox.desktop
 3. Move the appimage to the new directory: `mv ~/Downloads/Modrinth*.AppImage ~/Applications/Modrinth.AppImage`
 4. Make it executable: `chmod +x ~/Applications/Modrinth.AppImage`
 5. Install FUSE: `sudo pacman -S fuse`
-6. Create desktop entry to run with prime-run
+6. Create desktop entry to run with prime-run `/usr/share/applications/modrinth.desktop`
     ```bash
     [Desktop Entry] 
     Name=Modrinth
