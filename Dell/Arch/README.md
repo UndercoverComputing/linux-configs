@@ -74,6 +74,7 @@ Uncomment `%wheel ALL=(ALL:ALL) ALL` and save the changes with CTRL + O and CTRL
 ### Setup Timezone/Region
 ```bash
 ln -sf /usr/share/zoneinfo/Pacific/Auckland /etc/localtime
+timedatectl set-ntp true
 hwclock --systohc
 ```
 
@@ -128,7 +129,7 @@ Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBE
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-### Option 2 (if option 1 doesn't work)
+### Option 2 (only if option 1 doesn't work)
 Enable OS Prober:
 Scroll to the bottom of `/etc/default/grub` and comment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub.
 
@@ -162,3 +163,68 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 ```
+
+### NVIDIA Drivers
+```bash
+sudo pacman -S --needed linux-lts-headers
+sudo pacman -S --needed nvidia-dkms nvidia-utils nvidia-settings nvidia-prime
+sudo mkinitcpio -P
+sudo reboot
+```
+
+### lm_sensors
+```bash
+sudo pacman -S lm_sensors
+sudo sensors-detect
+```
+
+### Portal
+1. Install `xdg`
+```bash
+sudo pacman -S xdg-utils xdg-desktop-portal-wlr xdg-desktop-portal xdg-desktop-portal-gtk
+```
+
+2. Create a file called `~/.config/mimeapps.list`
+```conf
+[Default Applications]
+text/plain=code.desktop
+inode/directory=pcmanfm.desktop
+image/png=imv.desktop
+application/pdf=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+```
+
+### Modrinth
+1. Download the app image from the Modrinth website
+2. Create a directory for the app image: `mkdir ~/Applications`
+3. Move the appimage to the new directory: `mv ~/Downloads/Modrinth*.AppImage ~/Applications/Modrinth*.AppImage`
+4. Make it executable: `chmod +x ~/Applications/Modrinth.AppImage`
+5. Install FUSE: `sudo pacman -S fuse`
+6. Create desktop entry to run with prime-run
+    ```bash
+    [Desktop Entry] 
+    Name=Modrinth
+    Exec=prime-run /home/lewis/Applications/Modrinth.AppImage
+    Icon=modrinth
+    Type=Application
+    Categories=Game;
+    StartupNotify=true
+    ```
+
+### Wine
+Install Wine:
+```bash
+sudo pacman -Syu wine
+```
+
+### SMB:
+Install `gvfs-smb`
+```bash
+sudo pacman -S gvfs-smb
+```
+
+In PCMan, open `smb://xxx.xxx.xxx.xxx/`
+
+### Windows VM
+
