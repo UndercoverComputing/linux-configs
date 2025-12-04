@@ -2,7 +2,7 @@
 ## Install SwayFX
 
 ```bash
-yay -S swayfx swaylock swayidle
+yay -S swayfx swaylock-effects swayidle
 sudo pacman -S polkit swaybg waybar xorg-xwayland xdg-utils fakeroot pulseaudio
 ```
 
