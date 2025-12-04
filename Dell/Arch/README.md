@@ -113,10 +113,11 @@ systemctl enable NetworkManager
 ```
 
 ### Exit
-Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`
+Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. Reboot with `reboot` and boot into Arch.
 
-## Add Windows to GRUB:
-### Option 1: OS Prober
+## Arch Setup:
+### Add Windows to GRUB:
+**Option 1: OS Prober**
 Install the required services:
 ```bash
 pacman -S grub efibootmgr dosfstools mtools os-prober
@@ -127,7 +128,7 @@ Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBE
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-### Option 2 (only if option 1 doesn't work)
+**Option 2 (only if option 1 doesn't work)**
 Enable OS Prober:
 Scroll to the bottom of `/etc/default/grub` and comment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub.
 
@@ -144,8 +145,6 @@ And update GRUB:
 ```bash
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
-
-## Arch Setup:
 
 ### Flatpak:
 ```bash
