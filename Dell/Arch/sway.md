@@ -212,6 +212,7 @@ export GPG_AGENT_INFO
 Install dependancies:
 ```bash
 sudo pacman -S grim slurp wl-clipboard
+yay -S wayfreeze-git
 ```
 
 Create config:
