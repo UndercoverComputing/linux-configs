@@ -2,7 +2,8 @@
 ## Install SwayFX
 
 ```bash
-sudo pacman -S swayfx polkit swaybg waybar xorg-xwayland xdg-utils fakeroot pulseaudio
+yay -S swayfx
+sudo pacman -S polkit swaybg waybar xorg-xwayland xdg-utils fakeroot pulseaudio
 ```
 
 You can start the UI manually (don’t do this yet):
