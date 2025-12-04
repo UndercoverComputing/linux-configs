@@ -3,7 +3,7 @@
 
 ```bash
 yay -S swayfx swaylock-effects swayidle
-sudo pacman -S polkit swaybg waybar xorg-xwayland xdg-utils fakeroot pulseaudio
+sudo pacman -S polkit swaybg waybar xorg-xwayland xdg-utils fakeroot pulseaudio mpv imv
 ```
 
 You can start the UI manually (don’t do this yet):
