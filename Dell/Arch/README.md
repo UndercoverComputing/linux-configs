@@ -126,7 +126,8 @@ Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. 
 
 ### Audio
 ```bash
-
+sudo pacman -S pipewire pipewire-pulse pavucontrol
+sudo reboot
 ```
 
 ### Flatpak:
