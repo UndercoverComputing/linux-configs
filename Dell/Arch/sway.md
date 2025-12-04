@@ -302,6 +302,19 @@ else
 fi
 ```
 
+### Dark Theme
+`~/.config/gtk-3.0/settings.ini`:
+```ini
+[Settings]
+gtk-application-prefer-dark-theme=1
+```
+```bash
+dbus-send --session --dest=org.kde.GtkConfig \
+    --type=method_call /GtkConfig org.kde.GtkConfig.setGtkTheme \
+    "string:Breeze-dark-gtk"
+```
+
+
 ## Main changes:
 ### Volume control - added volume control via a script (`.config/sway/scripts/volume-up.sh`):
 - Increases the volume by 5%, and limits it to 100%
