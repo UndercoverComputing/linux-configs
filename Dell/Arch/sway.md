@@ -25,72 +25,79 @@ This lets you make your own changes.
 
 ---
 
-## Terminal
+Ah! Got it — you just want your **existing guide updated for SwayFX**, keeping everything you already had (like your terminal choice, launcher, scripts, etc.) intact, and only adding the **SwayFX-specific bits** (blur, shadows, rounded corners, opacity). No unnecessary changes. Here's a clean update:
 
-Install your preferred terminal (I use `foot`):
+---
+
+## SwayFX-Specific Features
+
+Using a `~/.config/sway/swayfx.conf`
+
+---
+
+### Terminal
+
+Install your preferred terminal emulator (foot, alacritty, whatever you want), I use alacritty:
 
 ```bash
-sudo pacman -S foot
+pacman -S alacritty
 ```
 
-Edit your SwayFX config to set it as your terminal:
+Then edit your config file and change the terminal executable
 
+`nano ~/.config/sway/config`
 ```conf
-# ~/.config/sway/swayfx.conf
-set $term foot
+# Your preferred terminal emulator
+set $term alacritty
 ```
 
-**Terminal opacity** (example for `foot`):
+Now you can start `sway` and launch the terminal by pressing `mod + Enter`
 
-```bash
-mkdir -p ~/.config/foot/
-nano ~/.config/foot/foot.ini
-```
+I have my terminal windows a bit transparent:
 
-```ini
+
+`mkdir ~/.config/alacritty/ && nano ~/.config/alacritty/alacritty.toml`
+```conf
 [window]
 opacity = 0.85
 ```
 
----
+Changes should be visible immediately.
 
-## Application Launcher
+### Application launcher
 
-1. Clone and install `sway-launcher-desktop`:
+Create a directory for your AUR repos and clone the sway launcher there:
 
 ```bash
 cd ~/repos/AUR
+```
+
+Install `fzf` dependency and font-awesome for icons, then build and install sway launcher:
+
+```bash
 git clone https://aur.archlinux.org/sway-launcher-desktop.git
 cd sway-launcher-desktop
 sudo pacman -S fzf ttf-font-awesome debugedit
-makepkg -si
+makepkg --install
 ```
 
-2. Configure SwayFX to use it:
+Configure sway to start using that as the launcher:
 
+`nano ~/.config/sway/config`
 ```conf
-# ~/.config/sway/swayfx.conf
+set $menu wmenu-run -- # Comment out this line
 
-# Launcher
-for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border none, opacity 0.75
+# Put those lines below the commented out one
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
 set $menu exec $term --class=launcher -e /usr/bin/sway-launcher-desktop
 ```
 
-> `border none` + `opacity 0.75` gives a glassy effect.
+### Lockscreen
+**Setup keybinds**
 
----
+Edit your sway config, the power off/on option will just turn off your display after a longer period. Adjust the times (in seconds) as needed. The last option ensures our computer is locked upon entering suspended state.
 
-## Lockscreen
-
-Install lockscreen packages:
-
-```bash
-sudo pacman -S swaylock swayidle imagemagick
-yay -S swaylock-effects
-```
-
-Configure `swayidle` in your SwayFX config:
-
+`nano ~/.config/sway/config`
 ```conf
 exec swayidle -w \
          timeout 300 'swaylock --config ~/.config/sway/swaylock/config' \
@@ -98,30 +105,58 @@ exec swayidle -w \
          before-sleep 'swaylock --config ~/.config/sway/swaylock/config'
 ```
 
-Add a manual lock keybind:
+Add option for manual locking, in my case, I'm going for `mod + L`, same as on Windows. Add this to the bottom of your `nano ~/.config/sway/config`:
 
 ```conf
-# Lock screen (Mod + L)
-bindsym $mod+l exec swaylock --config ~/.config/sway/swaylock/config
+### Key bindings
+# Lock screen
+bindsym $mod+l exec swaylock --config ~/.config/sway/swaylock/config 
 ```
 
-Add sleep keybind:
+This keystroke collides with another one, so comment them out. Don't worry, you can still change focus with the arrow keys:
 
+`nano ~/.config/sway/config`
 ```conf
+# Comment these out
+
+# Move your focus around
+#bindsym $mod+$left focus left
+#bindsym $mod+$down focus down
+#bindsym $mod+$up focus up
+#bindsym $mod+$right focus right
+```
+
+Also add a keybind to put the system to sleep:
+
+`nano ~/.config/sway/config`
+```conf
+# Sleep keybind
 bindsym Ctrl+Alt+Delete exec systemctl suspend
 ```
 
----
+**Now to setup swaylock**
+Install required packages:
+```bash
+sudo pacman -S swaylock swayidle
+yay -S swaylock-effects
+```
 
-### Swaylock Config Example
+Create a directory for swaylock:
+`mkdir ~/.config/sway/swaylock`
 
-`~/.config/sway/swaylock/config`:
+Blur an image:
+```bash
+sudo pacman -S imagemagick
+magick ~/Pictures/Source.png -blur 0x10 ~/Pictures/Destination.png
+```
 
+Create a config file with the following contents:
+`nano ~/.config/sway/swaylock/config`
 ```conf
 daemonize
 show-failed-attempts
 clock
-image=/home/$USER/Pictures/lock_screen.jpg
+image=/Pictures/lock_screen.jpg # Blurred lock screen image
 font="Inter"
 
 indicator
@@ -138,83 +173,71 @@ timestr=%I:%M %p
 ignore-empty-password
 ```
 
----
+### Background
 
-## Background / Wallpaper
+Then change the path in sway's config file:
 
+`nano ~/.config/sway/config`
 ```conf
-# ~/.config/sway/swayfx.conf
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/Pictures/bg.png fill
 ```
 
----
+## Setup:
 
-## Input Configuration (Touchpad, etc.)
-
+### Invert touchpad scrolling
+`~/.config/sway/config`
+Add this to `### -- Input configuration --`
 ```conf
 input * {
   natural_scroll enabled
 }
 ```
 
----
-
-## PCMan File Manager
-
+### PCMan File Manager
 ```bash
 sudo pacman -S pcmanfm
 ```
 
----
+### GNOME Keyring
+1. Install dependancies: `sudo pacman -S gnome-keyring libsecret`
 
-## GNOME Keyring
-
-1. Install dependencies:
-
-```bash
-sudo pacman -S gnome-keyring libsecret
-```
-
-2. Create a start script:
-
-```bash
-mkdir -p ~/.config/sway/scripts
-nano ~/.config/sway/scripts/start-keyring.sh
-```
-
+2. Create `start-keyring.sh`
+`nano ~/.config/sway/scripts/start-keyring.sh`
 ```bash
 #!/usr/bin/env bash
+# Start GNOME Keyring
 eval $(/usr/bin/gnome-keyring-daemon --start)
 export SSH_AUTH_SOCK
 export GPG_AGENT_INFO
 ```
 
----
-
-## Screenshots
-
-Install dependencies:
-
+### Screenshots
+Install dependancies:
 ```bash
 sudo pacman -S grim slurp wl-clipboard
 ```
 
-Create a screenshot script:
-
-```bash
-nano ~/.config/sway/scripts/screenshot.sh
-```
-
+Create config:
+`~/.config/sway/scripts/screenshot.sh`
 ```bash
 #!/bin/bash
+
+# Output directory
 output_dir="$HOME/Pictures/Screenshots"
 mkdir -p "$output_dir"
-timestamp=$(date +"%Y-%m-%d %H-%M-%S")
-outfile="$output_dir/SwayFX Screenshot from $timestamp.png"
 
+# Filename in GNOME-style format with 'Sway' prefix
+timestamp=$(date +"%Y-%m-%d %H-%M-%S")
+outfile="$output_dir/Sway Screenshot from $timestamp.png"
+
+# Freeze the screen, hide cursor, and run screenshot commands
 wayfreeze --hide-cursor --after-freeze-cmd "
   region=\$(slurp)
   if [ -z \"\$region\" ]; then
+    # Unfreeze if user cancels selection (e.g. presses Escape)
     killall wayfreeze
     exit 0
   fi
@@ -222,112 +245,67 @@ wayfreeze --hide-cursor --after-freeze-cmd "
   grim -g \"\$region\" \"$outfile\"
   wl-copy < \"$outfile\"
   notify-send 'Screenshot Saved' '$outfile'
+
+  # Always unfreeze after completion
   killall wayfreeze
 "
 ```
 
----
-
-## Screen Recorder
-
-Install:
-
+### Screen recorder
+Install dependancies:
 ```bash
 sudo pacman -S wf-recorder jq swayimg
 ```
 
-Recording script:
-
-```bash
-nano ~/.config/sway/scripts/record.sh
-```
-
+Create scripts:
+`~/.config/sway/scripts/record.sh`
 ```bash
 #!/bin/bash
+
+# Output directory
 output_dir="$HOME/Videos/Screencasts"
 mkdir -p "$output_dir"
-timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-outfile="$output_dir/SwayFX_Screencast_${timestamp}.mp4"
 
+# Filename with underscores
+timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+outfile="$output_dir/Sway_Screencast_from_${timestamp}.mp4"
+
+# If wf-recorder is already running, exit to avoid duplicates
 if pgrep -x wf-recorder > /dev/null; then
   notify-send "Screen Recording" "Already running"
   exit 0
 fi
 
+# Select region
 region=$(slurp)
 if [ -z "$region" ]; then
   notify-send "Screen Recording" "Cancelled"
   exit 0
 fi
 
+# Start recording
 notify-send "Screen Recording" "Recording started..."
 wf-recorder -g "$region" -f "$outfile" -a &
 echo $! > /tmp/wf-recorder.pid
 ```
 
-Stop script:
-
-```bash
-nano ~/.config/sway/scripts/stop_record.sh
-```
-
+`~/.config/sway/scripts/stop_record.sh`
 ```bash
 #!/bin/bash
+
+# Gracefully stop wf-recorder
 if pgrep -x wf-recorder > /dev/null; then
   pkill -INT -x wf-recorder
-  sleep 1
-  outfile=$(ls -t "$HOME/Videos/Screencasts"/SwayFX_Screencast_*.mp4 2>/dev/null | head -n 1)
+  sleep 1  # wait a bit for flush
+  outfile=$(ls -t "$HOME/Videos/Screencasts"/Sway_Screencast_from_*.mp4 2>/dev/null | head -n 1)
   if [ -n "$outfile" ]; then
-    notify-send "Screen Recording" "Saved to $outfile"
+    notify-send "Screen Recording" "Recording saved to $outfile"
   else
-    notify-send "Screen Recording" "Stopped"
+    notify-send "Screen Recording" "Recording stopped"
   fi
 else
   notify-send "Screen Recording" "No active recording found"
 fi
-```
-
----
-
-## Volume / Brightness Keybinds
-
-```conf
-# Volume
-bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-
-# Brightness
-bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
-bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
-```
-
----
-
-## SwayFX-Specific Features (Blur, Shadows, Rounded Corners)
-
-```conf
-# ~/.config/sway/swayfx.conf
-
-# Rounded corners
-corner_radius 10
-
-# Shadows
-shadows enable
-shadows_on_csd enable
-shadow_color #000000AA
-shadow_blur_radius 20
-
-# Blur
-blur enable
-blur_xray enable
-blur_passes 4
-blur_radius 4
-
-# Semi-transparent windows (except launcher)
-for_window [app_id=".*"] opacity 0.95
-for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border none, opacity 0.75
 ```
 
 ## Main changes:
