@@ -124,6 +124,11 @@ Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. 
 
 ## Arch Setup:
 
+### Audio
+```bash
+
+```
+
 ### Flatpak:
 ```bash
 sudo pacman -S flatpak
@@ -177,23 +182,6 @@ x-scheme-handler/https=firefox.desktop
 ```
 [View full file](https://raw.githubusercontent.com/UndercoverComputing/linux-configs/refs/heads/main/Dell/Arch/.config/mimeapps.list)
 
-### Modrinth
-1. Download the app image from the Modrinth website
-2. Create a directory for the app image: `mkdir ~/Applications`
-3. Move the appimage to the new directory: `mv ~/Downloads/Modrinth*.AppImage ~/Applications/Modrinth.AppImage`
-4. Make it executable: `chmod +x ~/Applications/Modrinth.AppImage`
-5. Install FUSE: `sudo pacman -S fuse`
-6. Create desktop entry to run with prime-run `/usr/share/applications/modrinth.desktop`
-    ```bash
-    [Desktop Entry] 
-    Name=Modrinth
-    Exec=prime-run /home/lewis/Applications/Modrinth.AppImage
-    Icon=modrinth
-    Type=Application
-    Categories=Game;
-    StartupNotify=true
-    ```
-
 ### Wine
 Install Wine:
 ```bash
@@ -210,3 +198,13 @@ In PCMan, open `smb://xxx.xxx.xxx.xxx/`
 
 ### Windows VM
 
+
+### Other applications
+```bash
+sudo pacman -S vscode firefox
+yay -S brave-bin google-chrome modrinth-app-bin
+```
+
+### Modrinth
+1. Install FUSE: `sudo pacman -S fuse`
+2. Edit the Modrinth desktop entry `/usr/share/applications/modrinth-app.desktop` and add `prime-run ` before `modrinth-app` in the `Exec` line.
