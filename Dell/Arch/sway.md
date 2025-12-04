@@ -9,7 +9,7 @@ sudo pacman -S polkit swaybg waybar xorg-xwayland xdg-utils fakeroot pulseaudio
 You can start the UI manually (don’t do this yet):
 
 ```bash
-swayfx
+sway
 ```
 
 ---
