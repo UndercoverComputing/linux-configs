@@ -198,7 +198,7 @@ sudo pacman -S gvfs-smb
 In PCMan, open `smb://xxx.xxx.xxx.xxx/`
 
 ### Windows VM
-
+[Instruction link](https://github.com/UndercoverComputing/linux-configs/blob/main/Dell/Arch/Windows-VM.md)
 
 ### Other applications
 ```bash
