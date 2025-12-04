@@ -1,7 +1,6 @@
 # Precision 5540
 ## Goals:
 - Boot Windows and Arch
-- Shared exFAT partition for sharing files
 
 # Installation
 ### First steps:
@@ -93,18 +92,26 @@ echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo "Precision5540" >> /etc/hostname
 ```
 
-### Grub-Installation
+### Add boot entry to bios
 Install the required services:
 ```bash
-pacman -S grub efibootmgr dosfstools mtools os-prober
+sudo pacman -S efibootmgr
 ```
-Enable OS Prober:
-Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub:
+
+Get the PARTUUID for `/` (`/dev/nvme0n1p8`):
 ```bash
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
+lsblk -o NAME,FSTYPE,UUID,PARTUUID
 ```
-- OS Prober may not find Windows. Instructions below.
+
+Create an entry:
+```bash
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 5 \
+  --label "Arch Linux" \
+  --loader '\vmlinuz-linux-lts' \
+  --unicode "root=PARTUUID=YOUr-ROOT-PARTUUID rw initrd=\intel-ucode.img initrd=\initramfs-linux-lts.img" \
+  --verbose
+```
+Replace `YOUR-ROOT-PARTUUID` with the partuuid of your root partition, and replace `--part 5` with the number of the boot partition (in this case its /dev/nvme0n1p`5`)
 
 ### Enable services
 ```bash
@@ -116,35 +123,6 @@ systemctl enable NetworkManager
 Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. Reboot with `reboot` and boot into Arch.
 
 ## Arch Setup:
-### Add Windows to GRUB:
-**Option 1: OS Prober**  
-Install the required services:  
-```bash
-pacman -S grub efibootmgr dosfstools mtools os-prober
-```
-Enable OS Prober:  
-Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub:  
-```bash
-grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-**Option 2 (only if option 1 doesn't work)**  
-Disable OS Prober:  
-Scroll to the bottom of `/etc/default/grub` and comment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub.  
-
-Edit `/etc/grub.d/40_custom` and add this at the bottom:
-```conf
-menuentry "Windows Boot Manager" {
-    insmod part_gpt
-    insmod fat
-    search --no-floppy --fs-uuid --set=root A65D-C69F # Windows EFI Partition (usually 100M, obtain the uuid with lsblk -f)
-    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-}
-```
-And update GRUB:
-```bash
-grub-mkconfig -o /boot/grub/grub.cfg
-```
 
 ### Flatpak:
 ```bash
