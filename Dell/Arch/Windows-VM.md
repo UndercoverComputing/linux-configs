@@ -9,3 +9,5 @@ sudo virsh net-start default
 ```
 
 Reboot and start it with `virt-manager`
+
+## Graphics
