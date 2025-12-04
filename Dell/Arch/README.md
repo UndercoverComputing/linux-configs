@@ -26,7 +26,7 @@ After that, I had these partitions:
 /dev/nvme0n1p5 - 1G EFI System
 /dev/nvme0n1p6 - 16G Linux swap
 /dev/nvme0n1p7 - 200G Linux filesystem (/home)
-/dev/nvme0n1p8 - 98G Linux filesystem (Arch root)
+/dev/nvme0n1p8 - 64G Linux filesystem (Arch root)
 ```
 - Formatting the partitions:
 ```bash
@@ -52,8 +52,6 @@ pacstrap -i /mnt base base-devel linux-lts linux-firmware linux-lts-headers sudo
 ```bash
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-
-- Reminder that Windows will not show up when first installing GRUB.
 
 ### CHROOT To Newley Installed system
 ```bash
