@@ -71,10 +71,7 @@ cd ~/repos/AUR
 Install `fzf` dependency and font-awesome for icons, then build and install sway launcher:
 
 ```bash
-git clone https://aur.archlinux.org/sway-launcher-desktop.git
-cd sway-launcher-desktop
-sudo pacman -S fzf ttf-font-awesome debugedit
-makepkg --install
+yay -S sway-launcher-desktop
 ```
 
 Configure sway to start using that as the launcher:
