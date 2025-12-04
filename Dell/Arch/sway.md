@@ -25,10 +25,6 @@ This lets you make your own changes.
 
 ---
 
-Ah! Got it — you just want your **existing guide updated for SwayFX**, keeping everything you already had (like your terminal choice, launcher, scripts, etc.) intact, and only adding the **SwayFX-specific bits** (blur, shadows, rounded corners, opacity). No unnecessary changes. Here's a clean update:
-
----
-
 ## SwayFX-Specific Features
 
 Using a `~/.config/sway/swayfx.conf`
