@@ -169,6 +169,7 @@ application/pdf=firefox.desktop
 x-scheme-handler/http=firefox.desktop
 x-scheme-handler/https=firefox.desktop
 ```
+[View full file](https://raw.githubusercontent.com/UndercoverComputing/linux-configs/refs/heads/main/Dell/Arch/.config/mimeapps.list)
 
 ### Modrinth
 1. Download the app image from the Modrinth website
