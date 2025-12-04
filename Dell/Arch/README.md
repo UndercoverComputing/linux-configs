@@ -153,6 +153,12 @@ sudo pacman -S lm_sensors
 sudo sensors-detect
 ```
 
+### powertop
+```bash
+sudo pacman -S powertop
+sudo powertop
+```
+
 ### Portal
 1. Install `xdg`
 ```bash
