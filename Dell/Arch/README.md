@@ -117,20 +117,20 @@ Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. 
 
 ## Arch Setup:
 ### Add Windows to GRUB:
-**Option 1: OS Prober**
-Install the required services:
+**Option 1: OS Prober**  
+Install the required services:  
 ```bash
 pacman -S grub efibootmgr dosfstools mtools os-prober
 ```
-Enable OS Prober:
-Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub:
+Enable OS Prober:  
+Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub:  
 ```bash
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-**Option 2 (only if option 1 doesn't work)**
-Enable OS Prober:
-Scroll to the bottom of `/etc/default/grub` and comment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub.
+**Option 2 (only if option 1 doesn't work)**  
+Disable OS Prober:  
+Scroll to the bottom of `/etc/default/grub` and comment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub.  
 
 Edit `/etc/grub.d/40_custom` and add this at the bottom:
 ```conf
