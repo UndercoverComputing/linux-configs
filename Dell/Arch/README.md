@@ -137,7 +137,7 @@ Edit `/etc/grub.d/40_custom` and add this at the bottom:
 menuentry "Windows Boot Manager" {
     insmod part_gpt
     insmod fat
-    search --no-floppy --fs-uuid --set=root A65D-C69F # Windows EFI Partition (usually 100M)
+    search --no-floppy --fs-uuid --set=root A65D-C69F # Windows EFI Partition (usually 100M, obtain the uuid with lsblk -f)
     chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
 ```
