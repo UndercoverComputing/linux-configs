@@ -68,9 +68,10 @@ Create a directory for your AUR repos and clone the sway launcher there:
 cd ~/repos/AUR
 ```
 
-Install `fzf` dependency and font-awesome for icons, then build and install sway launcher:
+Install `fzf` dependency, then install sway launcher:
 
 ```bash
+sudo pacman -S fzf
 yay -S sway-launcher-desktop
 ```
 
