@@ -71,7 +71,7 @@ cd ~/repos/AUR
 Install `fzf` dependency, then install sway launcher:
 
 ```bash
-sudo pacman -S fzf
+sudo pacman -S fzf ttf-font-awesome debugedit
 yay -S sway-launcher-desktop
 ```
 
