@@ -202,8 +202,8 @@ In PCMan, open `smb://xxx.xxx.xxx.xxx/`
 
 ### Other applications
 ```bash
-sudo pacman -S vscode firefox
-yay -S brave-bin google-chrome modrinth-app-bin
+sudo pacman -S firefox
+yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin
 ```
 
 ### Modrinth
