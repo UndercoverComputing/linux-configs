@@ -108,7 +108,7 @@ Create an entry:
 sudo efibootmgr --create --disk /dev/nvme0n1 --part 5 \
   --label "Arch Linux" \
   --loader '\vmlinuz-linux-lts' \
-  --unicode "root=PARTUUID=YOUR-ROOT-PARTUUID rw intel_iommu=on iommu=pt initrd=\intel-ucode.img initrd=\initramfs-linux-lts.img" \
+  --unicode "root=PARTUUID=YOUR-ROOT-PARTUUID rw mem_sleep=deep intel_iommu=on iommu=pt initrd=\intel-ucode.img initrd=\initramfs-linux-lts.img" \
   --verbose
 ```
 Replace `YOUR-ROOT-PARTUUID` with the partuuid of your root partition, and replace `--part 5` with the number of the boot partition (in this case its /dev/nvme0n1p`5`)
