@@ -124,6 +124,16 @@ Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. 
 
 ## Arch Setup:
 
+### Disabe power button
+1. Edit `/etc/systemd/logind.conf`
+   ```bash
+   sudo nano /etc/systemd/logind.conf
+   ```
+3. Uncomment `HandlePowerKey` and set it to ignore
+   ```bash
+   HandlePowerKey=ignore
+   ```
+
 ### Audio
 ```bash
 sudo pacman -S pipewire pipewire-pulse pavucontrol
