@@ -212,7 +212,7 @@ In PCMan, open `smb://xxx.xxx.xxx.xxx/`
 
 ### Other applications
 ```bash
-sudo pacman -S firefox man
+sudo pacman -S firefox man smartmontools
 yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin
 ```
 
