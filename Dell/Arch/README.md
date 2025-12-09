@@ -142,7 +142,7 @@ sudo mv /etc/grub.d/30_uefi-firmware /etc/grub.d/21_uefi
 ```
 And update GRUB:
 ```bash
-grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 ## Arch Setup:
