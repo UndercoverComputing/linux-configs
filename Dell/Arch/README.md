@@ -130,10 +130,10 @@ menuentry "Windows Boot Manager" {
 ```
 **Rename GRUB entries for a better boot order:**
 Make this the order:
-> Arch Linux
-> Windows
-> Advanced Arch
-> UEFI
+> Arch Linux  
+> Windows  
+> Advanced Arch  
+> UEFI  
 
 ```bash
 sudo mv /etc/grub.d/10_linux /etc/grub.d/01_linux
