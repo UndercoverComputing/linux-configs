@@ -118,7 +118,7 @@ Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. 
 ### Option 1: OS Prober
 Install the required services:
 ```bash
-pacman -S grub efibootmgr dosfstools mtools os-prober
+pacman -S grub efibootmgr dosfstools mtools os-prober ntfs-3g
 ```
 Enable OS Prober:
 Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub:
