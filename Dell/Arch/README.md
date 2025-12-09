@@ -95,7 +95,7 @@ echo "Precision5540" >> /etc/hostname
 ### Grub-Installation
 Install the required services:
 ```bash
-pacman -S grub efibootmgr dosfstools mtools os-prober
+pacman -S grub efibootmgr dosfstools mtools ntfs-3g
 ```
 Enable OS Prober:
 Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub:
@@ -115,20 +115,9 @@ systemctl enable NetworkManager
 Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. Reboot with `reboot` and boot into Arch.
 
 ## Add Windows to GRUB:
-### Option 1: OS Prober
-Install the required services:
-```bash
-pacman -S grub efibootmgr dosfstools mtools os-prober ntfs-3g
-```
-Enable OS Prober:
-Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub:
-```bash
-grub-mkconfig -o /boot/grub/grub.cfg
-```
 
-### Option 2 (only if option 1 doesn't work)
-Enable OS Prober:
-Scroll to the bottom of `/etc/default/grub` and comment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub.
+Disable OS Prober:
+Scroll to the bottom of `/etc/default/grub` and set `GRUB_DISABLE_OS_PROBER` to `false`. Save the file and update grub.
 
 Edit `/etc/grub.d/40_custom` and add this at the bottom:
 ```conf
@@ -138,6 +127,18 @@ menuentry "Windows Boot Manager" {
     search --no-floppy --fs-uuid --set=root ABCD-1234 # Windows EFI Partition (usually 100M)
     chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
+```
+**Rename GRUB entries for a better boot order:**
+Make this the order:
+> Arch Linux
+> Windows
+> Advanced Arch
+> UEFI
+
+```bash
+sudo mv /etc/grub.d/10_linux /etc/grub.d/01_linux
+sudo mv /etc/grub.d/40_custom 02_windows
+sudo mv /etc/grub.d/30_uefi-firmware /etc/grub.d/21_uefi
 ```
 And update GRUB:
 ```bash
