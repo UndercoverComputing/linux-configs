@@ -146,6 +146,35 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ## Arch Setup:
 
+### Applications
+```bash
+sudo pacman -S firefox man smartmontools dpkg
+yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin
+```
+
+### Plymouth splash
+1. Install plymouth
+   ```bash
+   sudo pacman -S plymouth cantarell-fonts
+   ```
+2. Clone a repo
+   ```bash
+   mkdir plymouth_themes
+   cd plymouth_themes
+   git init
+   git remote add -f origin https://github.com/gevera/plymouth_themes
+   git config core.sparseCheckout true
+   echo "dell/dell10" >> .git/info/sparse-checkout
+   git pull origin master
+   ```
+3. Copy to Plymouth themes
+   ```bash
+   sudo cp -vr dell/dell10 /usr/share/plymouth/themes/
+   sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/dell10/dell10.plymouth 100
+   sudo update-alternatives --config default.plymouth
+   sudo mkinitcpio -P
+   ```
+
 ### Disable power button
 1. Edit `/etc/systemd/logind.conf`
    ```bash
@@ -231,12 +260,6 @@ In PCMan, open `smb://xxx.xxx.xxx.xxx/`
 
 ### Windows VM
 [Instruction link](https://github.com/UndercoverComputing/linux-configs/blob/main/Dell/Arch/Windows-VM.md)
-
-### Other applications
-```bash
-sudo pacman -S firefox man smartmontools
-yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin
-```
 
 ### Modrinth
 1. Install FUSE: `sudo pacman -S fuse`
