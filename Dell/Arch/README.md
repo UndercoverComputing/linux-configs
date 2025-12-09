@@ -149,7 +149,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ### Applications
 ```bash
 sudo pacman -S firefox man smartmontools dpkg
-yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin grub-customizer
+yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin
 ```
 
 ### Plymouth splash
