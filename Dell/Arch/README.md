@@ -10,8 +10,8 @@ pacman -S archlinux-keyring
 ```
 
 ### Partitioning the drive:
-**512GB SSD**
-- I had to reinstall Windows, and shrunk it to around 160GB because the partitions were messy.
+**500GB SSD**
+- I had to reinstall Windows, and shrunk it to around 184GB because the partitions were messy.
 
 After that, I had these partitions:
 ```bash
