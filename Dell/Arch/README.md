@@ -92,18 +92,26 @@ echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo "Precision5540" >> /etc/hostname
 ```
 
-### Grub-Installation
+### Add boot entry to bios
 Install the required services:
 ```bash
-pacman -S grub efibootmgr dosfstools mtools ntfs-3g
+sudo pacman -S efibootmgr
 ```
-Enable OS Prober:
-Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBER`. Save the file and update grub:
+
+Get the PARTUUID for `/` (`/dev/nvme0n1p8`):
 ```bash
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
+lsblk -o NAME,FSTYPE,UUID,PARTUUID
 ```
-- OS Prober may not find Windows. Instructions below.
+
+Create an entry:
+```bash
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 5 \
+  --label "Arch Linux" \
+  --loader '\vmlinuz-linux-lts' \
+  --unicode "root=PARTUUID=YOUR-ROOT-PARTUUID rw mem_sleep=deep `intel_iommu=on iommu=pt quiet loglevel=0 rd.systemd.show_status=auto rd.udev.log_priority=0 vt.global_cursor_default=0 splash initrd=\intel-ucode.img initrd=\initramfs-linux-lts.img" \
+  --verbose
+```
+Replace `YOUR-ROOT-PARTUUID` with the partuuid of your root partition, and replace `--part 5` with the number of the boot partition (in this case its /dev/nvme0n1p`5`)
 
 ### Enable services
 ```bash
@@ -113,37 +121,6 @@ systemctl enable NetworkManager
 
 ### Exit
 Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. Reboot with `reboot` and boot into Arch.
-
-## Add Windows to GRUB:
-
-Disable OS Prober:
-Scroll to the bottom of `/etc/default/grub` and set `GRUB_DISABLE_OS_PROBER` to `false`. Save the file and update grub.
-
-Edit `/etc/grub.d/40_custom` and add this at the bottom:
-```conf
-menuentry "Windows Boot Manager" {
-    insmod part_gpt
-    insmod fat
-    search --no-floppy --fs-uuid --set=root ABCD-1234 # Windows EFI Partition (usually 100M)
-    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-}
-```
-**Rename GRUB entries for a better boot order:**
-Make this the order:
-> Arch Linux  
-> Windows  
-> Advanced Arch  
-> UEFI  
-
-```bash
-sudo mv /etc/grub.d/10_linux /etc/grub.d/01_linux
-sudo mv /etc/grub.d/40_custom 02_windows
-sudo mv /etc/grub.d/30_uefi-firmware /etc/grub.d/21_uefi
-```
-And update GRUB:
-```bash
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
 
 ## Arch Setup:
 
