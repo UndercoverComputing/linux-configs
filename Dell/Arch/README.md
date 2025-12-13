@@ -17,7 +17,7 @@ After that, I had these partitions:
 ```bash
 /dev/nvme0n1p1 - 100M EFI System
 /dev/nvme0n1p2 - 16M Microsoft reserved
-/dev/nvme0n1p3 - 184GB Microsoft basic data
+/dev/nvme0n1p3 - 179.1GB Microsoft basic data
 /dev/nvme0n1p4 - 509M Windows recovery environment
 ```
 - I created the following Linux partitions:
