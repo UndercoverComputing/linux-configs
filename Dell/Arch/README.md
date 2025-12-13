@@ -71,8 +71,8 @@ Uncomment `%wheel ALL=(ALL:ALL) ALL` and save the changes with CTRL + O and CTRL
 ### Setup Timezone/Region
 ```bash
 ln -sf /usr/share/zoneinfo/Pacific/Auckland /etc/localtime
+sudo timedatectl set-timezone Pacific/Auckland
 timedatectl set-ntp true
-hwclock --systohc
 ```
 
 ### Setup System Language
