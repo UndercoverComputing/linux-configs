@@ -62,13 +62,7 @@ Changes should be visible immediately.
 
 ### Application launcher
 
-Create a directory for your AUR repos and clone the sway launcher there:
-
-```bash
-cd ~/repos/AUR
-```
-
-Install `fzf` dependency, then install sway launcher:
+Install dependencies, then install sway launcher:
 
 ```bash
 sudo pacman -S fzf ttf-font-awesome debugedit
