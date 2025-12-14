@@ -305,3 +305,18 @@ dbus-send --session --dest=org.kde.GtkConfig \
 
 ### Get keys:
 Use `wev` to find out what a key is.
+
+## Start sway on login
+
+Add this to the top of `~/.bash_profile`:
+```bash
+if [ "$(tty)" = "/dev/tty1" ] ; then
+    # Your environment variables
+    export QT_QPA_PLATFORM=wayland
+    export MOZ_ENABLE_WAYLAND=1
+    export MOZ_WEBRENDER=1
+    export XDG_SESSION_TYPE=wayland
+    export XDG_CURRENT_DESKTOP=sway
+    exec sway
+fi
+```
