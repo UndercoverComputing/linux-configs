@@ -135,7 +135,7 @@ makepkg -si
 
 ### Applications
 ```bash
-sudo pacman -S firefox man smartmontools dpkg
+sudo pacman -S firefox man smartmontools dpkg nm-connection-editor
 yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin
 ```
 
