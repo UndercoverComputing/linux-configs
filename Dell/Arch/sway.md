@@ -2,8 +2,8 @@
 ## Install SwayFX
 
 ```bash
-yay -S swayfx swaylock-effects swayidle
-sudo pacman -S polkit swaybg waybar xorg-xwayland xdg-utils fakeroot pulseaudio mpv imv
+yay -S swayfx swaylock-effects swayidle wayfreeze-git
+sudo pacman -S polkit swaybg waybar xorg-xwayland xdg-utils fakeroot pulseaudio mpv imv imagemagick gnome-keyring libsecret grim slurp wl-clipboard wf-recorder jq swayimg
 ```
 
 You can start the UI manually (don’t do this yet):
@@ -123,18 +123,12 @@ bindsym Ctrl+Alt+Delete exec systemctl suspend
 ```
 
 **Now to setup swaylock**
-Install required packages:
-```bash
-sudo pacman -S swaylock swayidle
-yay -S swaylock-effects
-```
 
 Create a directory for swaylock:
 `mkdir ~/.config/sway/swaylock`
 
 Blur an image:
 ```bash
-sudo pacman -S imagemagick
 magick ~/Pictures/Source.png -blur 0x10 ~/Pictures/Destination.png
 ```
 
@@ -190,9 +184,8 @@ sudo pacman -S pcmanfm
 ```
 
 ### GNOME Keyring
-1. Install dependancies: `sudo pacman -S gnome-keyring libsecret`
 
-2. Create `start-keyring.sh`
+Create `start-keyring.sh`
 `nano ~/.config/sway/scripts/start-keyring.sh`
 ```bash
 #!/usr/bin/env bash
@@ -203,11 +196,6 @@ export GPG_AGENT_INFO
 ```
 
 ### Screenshots
-Install dependancies:
-```bash
-sudo pacman -S grim slurp wl-clipboard
-yay -S wayfreeze-git
-```
 
 Create config:
 `~/.config/sway/scripts/screenshot.sh`
@@ -241,10 +229,6 @@ wayfreeze --hide-cursor --after-freeze-cmd "
 ```
 
 ### Screen recorder
-Install dependancies:
-```bash
-sudo pacman -S wf-recorder jq swayimg
-```
 
 Create scripts:
 `~/.config/sway/scripts/record.sh`
@@ -308,16 +292,6 @@ dbus-send --session --dest=org.kde.GtkConfig \
     --type=method_call /GtkConfig org.kde.GtkConfig.setGtkTheme \
     "string:Breeze-dark-gtk"
 ```
-
-
-## Main changes:
-### Volume control - added volume control via a script (`.config/sway/scripts/volume-up.sh`):
-- Increases the volume by 5%, and limits it to 100%
-- Decreasing volume works through the normal pactl command
-### Extra keybinds:
-- Brightness control
-- Lock screen
-- Extra keybinds to switch desktops
 
 ### Get keys:
 Use `wev` to find out what a key is.
