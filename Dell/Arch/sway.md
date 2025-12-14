@@ -36,7 +36,7 @@ Using a `~/.config/sway/swayfx.conf`
 Install your preferred terminal emulator (foot, alacritty, whatever you want), I use alacritty:
 
 ```bash
-pacman -S alacritty
+sudo pacman -S alacritty
 ```
 
 Then edit your config file and change the terminal executable
