@@ -27,8 +27,7 @@ bar swaybar_command waybar
 ```
 
 ### Network configurator
-  1. `sudo pacman -S nm-connection-editor`
-  2. Edit waybar so that: pressing the Network icon opens nmtui, and pressing the vpn icon opens nm-connection-editor.
+Edit waybar so that: pressing the Network icon opens nmtui, and pressing the vpn icon opens nm-connection-editor.
 
 ### Modify waybar config
 I had to make **alot** of changes to the waybar config. Custom VPN module, css changes, converted hyprland modules to sway modules, changed termperature sensor, etc. Updated changes on my github.
