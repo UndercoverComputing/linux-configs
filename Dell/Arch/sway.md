@@ -25,6 +25,16 @@ This lets you make your own changes.
 
 ---
 
+### Install fonts:
+```bash
+sudo pacman -S ttf-jetbrains-mono-nerd
+```
+
+Modify sway config:
+```conf
+font pango:JetBrainsMono Nerd Font Mono 9
+```
+
 ## SwayFX-Specific Features
 
 Using a `~/.config/sway/swayfx.conf`
