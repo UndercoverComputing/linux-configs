@@ -26,16 +26,6 @@ Comment out the existing `bar` section, and put this instead:
 bar swaybar_command waybar
 ```
 
-### Install fonts:
-```bash
-sudo pacman -S ttf-jetbrains-mono-nerd
-```
-
-Modify sway config:
-```conf
-font pango:JetBrainsMono Nerd Font Mono 9
-```
-
 ### Network configurator
   1. `sudo pacman -S nm-connection-editor`
   2. Edit waybar so that: pressing the Network icon opens nmtui, and pressing the vpn icon opens nm-connection-editor.
