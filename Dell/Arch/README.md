@@ -124,6 +124,15 @@ Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. 
 
 ## Arch Setup:
 
+### Yay
+```bash
+mkdir -p ~/repos/AUR/
+cd ~/repos/AUR
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
 ### Applications
 ```bash
 sudo pacman -S firefox man smartmontools dpkg
@@ -173,15 +182,6 @@ sudo reboot
 ```bash
 sudo pacman -S flatpak
 sudo reboot
-```
-
-### Yay
-```bash
-mkdir -p ~/repos/AUR/
-cd ~/repos/AUR
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
 ```
 
 ### NVIDIA Drivers
