@@ -73,6 +73,9 @@ input type:touchpad {
     middle_emulation enabled
 }
 
+input type:pointer {
+    accel_profile flat
+}
 
 ### -- Key bindings --
 
