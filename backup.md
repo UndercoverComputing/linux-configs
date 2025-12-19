@@ -31,6 +31,6 @@ rsync -a --progress \
 ~/Downloads \
 ~/Pictures \
 ~/Videos \
-~/.config \ 
+~/.config \
 /mnt/usb/
 ```
