@@ -64,9 +64,8 @@ mkfs.ext4 -L Arch /dev/mapper/crypto-Arch
 
 ```bash
 mount /dev/mapper/crypto-Arch /mnt
-mkdir /mnt/home /mnt/boot
-mount /dev/mapper/crypto-home /mnt/home
-mount /dev/sda1 /mnt/boot
+mount --mkdir /dev/mapper/crypto-home /mnt/home
+mount --mkdir /dev/sda1 /mnt/boot
 swapon /dev/mapper/crypto-SWAP
 ```
 
