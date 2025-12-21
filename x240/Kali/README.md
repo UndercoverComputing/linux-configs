@@ -13,10 +13,10 @@ Refer to https://www.youtube.com/watch?v=8N9jKWm-cKY
 ├─ sda3  NTFS                  #  68.7GB   (Windows C:)
 ├─ sda4  LUKS                  #  170.3GB  (Linux everything)
      └─ LVM VG: cryptroot
-        ├─ SWAP     # 8GB (shared swap)
+        ├─ swap     # 8GB (shared swap)
         ├─ home     # 80GB (shared /home)
-        ├─ Kali     # 41GB (Kali root /)
-        └─ Arch     # 41GB (Arch root /)
+        ├─ kali     # 41GB (Kali root /)
+        └─ home     # 41GB (Arch root /)
 ```
 
 ### Create encrypted volume:
@@ -35,14 +35,14 @@ Refer to https://www.youtube.com/watch?v=8N9jKWm-cKY
 1. Choose **Configure the Logical Volume Manager**
 2. Agree to write any changes to the partition table
 3. Select **Create volume group**
-4. Give it the name `crypto`
+4. Give it the name `crypt`
 5. Select **/dev/mapper/sda4_crypt**
 6. Agree to write any changes to the partition table
 
-**Do this for `SWAP`, `home`, `Kali`, and `Arch`.**
+**Do this for `swap`, `home`, `kali`, and `arch`.**
 
 1. Select **Create logical volume**
-2. Choose `crypto`
+2. Choose `crypt`
 3. Give it a name and allocate a size
 4. Repeat
 
@@ -54,15 +54,15 @@ When done, choose **Finish**.
   Use as: `EFI System Partition`  
   Bootable flag: `on`  
 
-- **LV Arch**  
+- **LV arch**  
   Use as: `do not use`  
 
-- **LV Kali**  
+- **LV kali**  
   Use as: `Ext4`  
   Moint point: `/`  
   Label: `Kali`  
 
-- **LV SWAP**  
+- **LV swap**  
   Use as: `swap area`  
 
 - **LV home**  
