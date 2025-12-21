@@ -3,7 +3,7 @@
 - Boot Arch alongside Windows and Kali
 
 # Installation
-### First steps:
+## First steps:
 ```
 pacman -Sy
 pacman -S archlinux-keyring
@@ -20,7 +20,7 @@ vgchange -ay
 Verify:  
 `ls /dev/mapper/` should return `crypto-Arch crypto-Kali crypto-SWAP crypto-home cryptroot`
 
-### Verify Kali user ids
+## Kali
 
 **Mount the partitions**
 
@@ -30,7 +30,7 @@ mount /dev/mapper/crypto-home /mnt/home
 mount /dev/sda1 /mnt/boot
 ```
 
-**Get the ids**
+### Get the ids**
 
 ```bash
 arch-chroot /mnt
@@ -43,12 +43,18 @@ id kali
 uid=1000(kali) gid=1000(kali) groups=1000(kali),...
 ```
 
+### Setup the encrypted drive
+
+uh
+
 **Exit safely**
 
 ```bash
 exit
 umount -lR /mnt
 ```
+
+## Arch
 
 ### Mount Arch
 
