@@ -18,41 +18,7 @@ vgchange -ay
 ```
 
 Verify:  
-`ls /dev/mapper/` should return `crypto-Arch crypto-Kali crypto-SWAP crypto-home cryptroot`
-
-## Kali
-
-**Mount the partitions**
-
-```bash
-mount /dev/mapper/crypto-Kali /mnt
-mount /dev/mapper/crypto-home /mnt/home
-mount /dev/sda1 /mnt/boot
-```
-
-### Get the ids**
-
-```bash
-arch-chroot /mnt
-id kali
-```
-
-**Example output:**
-
-```bash
-uid=1000(kali) gid=1000(kali) groups=1000(kali),...
-```
-
-### Setup the encrypted drive
-
-uh
-
-**Exit safely**
-
-```bash
-exit
-umount -lR /mnt
-```
+`ls /dev/mapper/` should return `cryptroot crypt-arch crypt-home crypt-kali crypt-swap `
 
 ## Arch
 
@@ -63,16 +29,16 @@ umount -lR /mnt
 As the Arch Linux volume was not formatted during the Kali install, do it here.
 
 ```bash
-mkfs.ext4 -L Arch /dev/mapper/crypto-Arch
+mkfs.ext4 -L Arch /dev/mapper/crypt-arch
 ```
 
 **Mount the partitions**
 
 ```bash
-mount /dev/mapper/crypto-Arch /mnt
-mount --mkdir /dev/mapper/crypto-home /mnt/home
+mount /dev/mapper/crypt-arch /mnt
+mount --mkdir /dev/mapper/crypt-home /mnt/home
 mount --mkdir /dev/sda1 /mnt/boot
-swapon /dev/mapper/crypto-SWAP
+swapon /dev/mapper/crypt-swap
 ```
 
 ### Installing the base system
