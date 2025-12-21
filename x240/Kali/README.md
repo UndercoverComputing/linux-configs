@@ -39,7 +39,7 @@ Refer to https://www.youtube.com/watch?v=8N9jKWm-cKY
 5. Select **/dev/mapper/sda4_crypt**
 6. Agree to write any changes to the partition table
 
-**Do this for `SWAP`, `home`, `Kali`, and `Arch`.
+**Do this for `SWAP`, `home`, `Kali`, and `Arch`.**
 
 1. Select **Create logical volume**
 2. Choose `crypto`
