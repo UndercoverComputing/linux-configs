@@ -105,41 +105,34 @@ echo "#KEYMAP=us" > /etc/vconsole.conf
 mkinitcpio -P
 ```
 
-### Grub installation
-1. Install the required services:
+### Bootloader installation
+1. Install systemd-boot:
    ```bash
-   pacman -S grub efibootmgr dosfstools mtools os-prober
+   bootctl install
    ```
 
-2. Enable OS Prober:
-   Scroll to the bottom of `/etc/default/grub` and uncomment `GRUB_DISABLE_OS_PROBER`. 
-
-3. Configure for encryption:
-   - `GRUB_CMDLINE_LINUX=""` and replace it with:
-     
-      ```bash
-      GRUB_CMDLINE_LINUX="rd.luks.name=<UUID-of-sda4>=cryptroot root=/dev/mapper/crypto-Arch rw"
-      ```
-
-4. Add Kali entry
-   `/etc/grub.d/40_custom`
+2. Create Arch’s boot entry:
    ```bash
-   menuentry "Kali Linux" {
-    insmod part_gpt
-    insmod fat
-    insmod ext2
-    insmod luks
-    insmod lvm
-    set root='hd0,gpt1'
-    linux /vmlinuz-linux-lts rd.luks.name=<UUID-of-sda4>=cryptroot root=/dev/mapper/crypto-Kali rw
-    initrd /intel-ucode.img /initramfs-linux-lts.img
-   }
+   nano /boot/loader/entries/arch.conf
    ```
 
-5. Save the file and install grub:
+   Contents:
+   ```conf
+   title   Arch Linux
+   linux   /vmlinuz-linux-lts
+   initrd  /intel-ucode.img
+   initrd  /initramfs-linux-lts.img
+   options rd.luks.name=<UUID-of-sda4>=cryptroot root=/dev/mapper/crypt-arch rw
+   ```
+
+3. loader.conf:
    ```bash
-   grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Arch
-   grub-mkconfig -o /boot/grub/grub.cfg
+   nano /boot/loader/loader.conf
+   ```
+   
+   ```conf
+   default arch
+   timeout 5
    ```
 
 ### Enable services
