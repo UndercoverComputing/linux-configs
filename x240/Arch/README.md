@@ -121,7 +121,7 @@ Uncomment `%wheel ALL=(ALL:ALL) ALL` and save the changes with CTRL + O and CTRL
 
 ### Configure initramfs for LUKS + LVM
 
-1. `/etc/mkinitcpio.conf` --> Add `encrypt` and `lvm2` to HOOKS before `filesystems`
+1. `/etc/mkinitcpio.conf` --> Add `sd-encrypt` and `lvm2` to HOOKS before `filesystems`
 
 2. Remove file not found error (https://bbs.archlinux.org/viewtopic.php?id=310236):
 ```bash
