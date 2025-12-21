@@ -12,7 +12,7 @@ Refer to https://www.youtube.com/watch?v=8N9jKWm-cKY
 ├─ sda2  MSR                   #  16.8MB   (Windows only – do not touch)
 ├─ sda3  NTFS                  #  68.7GB   (Windows C:)
 ├─ sda4  LUKS                  #  170.3GB  (Linux everything)
-     └─ LVM VG: encrypted-vol
+     └─ LVM VG: cryptroot
         ├─ SWAP     # 8GB (shared swap)
         ├─ home     # 80GB (shared /home)
         ├─ Kali     # 41GB (Kali root /)
@@ -25,7 +25,7 @@ Refer to https://www.youtube.com/watch?v=8N9jKWm-cKY
 2. Agree to write any changes to the partition table
 3. Choose **Create encrypted volumes**
 4. Select the free space: **/dev/sda free #2** in this case.
-5. Give it the name "encrypted-vol"
+5. Give it the name "cryptroot"
 6. Agree to write any changes to the partition table
 7. Choose "Finish"
 8. Choose **Yes** to overwrite the partition
