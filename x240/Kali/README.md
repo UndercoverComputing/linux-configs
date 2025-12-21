@@ -50,24 +50,24 @@ When done, choose **Finish**.
 
 ### Setup partitions/volumes
 
-- **Windows EFI partition**
-  Use as: `EFI System Partition`
-  Bootable flag: `on`
+- **Windows EFI partition**  
+  Use as: `EFI System Partition`  
+  Bootable flag: `on`  
 
-- **LV Arch**
-  Use as: `do not use`
+- **LV Arch**  
+  Use as: `do not use`  
 
-- **LV Kali**
-  Use as: `Ext4`
-  Moint point: `/`
-  Label: `Kali`
+- **LV Kali**  
+  Use as: `Ext4`  
+  Moint point: `/`  
+  Label: `Kali`  
 
-- **LV SWAP**
-  Use as: `swap area`
+- **LV SWAP**  
+  Use as: `swap area`  
 
-- **LV home**
-  Use as: `Ext4`
-  Mount point: `/home`
-  Label: `home`
+- **LV home**  
+  Use as: `Ext4`  
+  Mount point: `/home`  
+  Label: `home`  
 
 Once complete, scroll down and select **Finish partitioning and write changes to disk**
