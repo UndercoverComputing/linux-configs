@@ -146,7 +146,7 @@ mkinitcpio -P
    - `GRUB_CMDLINE_LINUX=""` and replace it with:
      
       ```bash
-      GRUB_CMDLINE_LINUX="rd.luks.name=<UUID-of-sda4>:cryptroot root=/dev/mapper/crypto-Arch rw"
+      GRUB_CMDLINE_LINUX="rd.luks.name=<UUID-of-sda4>=cryptroot root=/dev/mapper/crypto-Arch rw"
       ```
 
 4. Add Kali entry
@@ -159,7 +159,7 @@ mkinitcpio -P
     insmod luks
     insmod lvm
     set root='hd0,gpt1'
-    linux /vmlinuz-linux-lts rd.luks.name=<UUID-of-sda4>:cryptroot root=/dev/mapper/crypto-Kali rw
+    linux /vmlinuz-linux-lts rd.luks.name=<UUID-of-sda4>=cryptroot root=/dev/mapper/crypto-Kali rw
     initrd /intel-ucode.img /initramfs-linux-lts.img
    }
    ```
