@@ -146,9 +146,8 @@ mkinitcpio -P
 3. Configure for encryption:
    - `GRUB_CMDLINE_LINUX=""` and replace it with:
       ```bash
-      GRUB_CMDLINE_LINUX="cryptdevice=UUID=<UUID-of-sda4>:cryptroot root=/dev/mapper/crypto-Arch"
+      GRUB_CMDLINE_LINUX="rd.luks.name=<UUID-of-sda4>:cryptroot root=/dev/mapper/crypto-Arch rw"
       ```
-   - Uncomment `GRUB_ENABLE_CRYPTODISK=y`
 
 4. Add Kali entry
    `/etc/grub.d/40_custom`
@@ -160,7 +159,7 @@ mkinitcpio -P
     insmod luks
     insmod lvm
     set root='hd0,gpt1'
-    linux /vmlinuz-linux-lts root=/dev/mapper/crypto-Kali cryptdevice=UUID=<UUID-of-sda4>:cryptroot quiet
+    linux /vmlinuz-linux-lts rd.luks.name=<UUID-of-sda4>:cryptroot root=/dev/mapper/crypto-Kali rw
     initrd /intel-ucode.img /initramfs-linux-lts.img
    }
    ```
