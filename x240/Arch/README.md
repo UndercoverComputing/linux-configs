@@ -144,6 +144,7 @@ mkinitcpio -P
 
 3. Configure for encryption:
    - `GRUB_CMDLINE_LINUX=""` and replace it with:
+     
       ```bash
       GRUB_CMDLINE_LINUX="rd.luks.name=<UUID-of-sda4>:cryptroot root=/dev/mapper/crypto-Arch rw"
       ```
