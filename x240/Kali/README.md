@@ -16,7 +16,7 @@ Refer to https://www.youtube.com/watch?v=8N9jKWm-cKY
         ├─ swap     # 8GB (shared swap)
         ├─ home     # 80GB (shared /home)
         ├─ kali     # 41GB (Kali root /)
-        └─ home     # 41GB (Arch root /)
+        └─ arch     # 41GB (Arch root /)
 ```
 
 ### Create encrypted volume:
