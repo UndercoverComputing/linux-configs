@@ -20,8 +20,6 @@ vgchange -ay
 Verify:  
 `ls /dev/mapper/` should return `cryptroot crypt-arch crypt-home crypt-kali crypt-swap `
 
-## Arch
-
 ### Mount Arch
 
 **Format Arch partition**
@@ -143,3 +141,112 @@ systemctl enable NetworkManager
 
 ### Exit
 Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. Reboot with `reboot` and boot into Arch.
+
+## Arch Setup:
+
+### Yay
+```bash
+mkdir -p ~/repos/AUR/
+cd ~/repos/AUR
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
+### Applications
+```bash
+sudo pacman -S btop firefox man smartmontools nm-connection-editor fastfetch
+yay -S brave-bin google-chrome
+```
+
+### Plymouth splash
+1. Install plymouth
+   ```bash
+   sudo pacman -S plymouth
+   ```
+2. Clone a repo
+   ```bash
+   git clone https://github.com/gevera/plymouth_themes
+   cd plymouth_themes/thinkpad
+   ```
+3. Copy to Plymouth themes
+   ```bash
+   tar xvaf think10.tar.gz
+   sudo cp -vr think10 /usr/share/plymouth/themes/
+   ```
+4. Add `plymouth` to mkinitcpio HOOKS:
+   Edit `/etc/mkinitcpio.conf`:
+   ```conf
+   HOOKS=(base systemd plymouth autodetect microcode modconf kms keyboard keymap sd-vconsole block sd-encrypt lvm2 filesystems fsck)
+   ```
+   Update initramfs:
+   ```bash
+   sudo mkinitcpio -P
+   ```
+5. Change bootmenu command:
+   Edit `/boot/loader/entries/arch.conf`:
+   ```conf
+   title   Arch Linux
+   linux   /vmlinuz-linux-lts
+   initrd  /intel-ucode.img
+   initrd  /initramfs-linux-lts.img
+   options rd.luks.name=<UUID-of-sda4>=cryptroot root=/dev/mapper/crypt-arch rw quiet splash loglevel=3 rd.systemd.show_status=false rd.udev.log_level=3 vt.global_cursor_default=0
+   ```
+
+### Disable power button
+1. Edit `/etc/systemd/logind.conf`
+   ```bash
+   sudo nano /etc/systemd/logind.conf
+   ```
+3. Uncomment `HandlePowerKey` and set it to ignore
+   ```bash
+   HandlePowerKey=ignore
+   ```
+
+### Audio
+```bash
+sudo pacman -S pipewire pipewire-pulse pavucontrol
+sudo reboot
+```
+
+### Flatpak:
+```bash
+sudo pacman -S flatpak
+sudo reboot
+```
+
+### lm_sensors
+```bash
+sudo pacman -S lm_sensors
+sudo sensors-detect
+```
+
+### powertop
+```bash
+sudo pacman -S powertop
+sudo powertop
+```
+
+### Portal
+1. Install `xdg`
+```bash
+sudo pacman -S xdg-utils xdg-desktop-portal-wlr xdg-desktop-portal xdg-desktop-portal-gtk
+```
+
+2. Create a file called `~/.config/mimeapps.list`
+```conf
+[Default Applications]
+text/plain=code.desktop
+inode/directory=pcmanfm.desktop
+image/png=imv.desktop
+application/pdf=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+```
+[View full file](https://raw.githubusercontent.com/UndercoverComputing/linux-configs/refs/heads/main/.config/mimeapps.list)
+
+### SMB:
+Install `gvfs-smb`
+```bash
+sudo pacman -S gvfs-smb
+```
