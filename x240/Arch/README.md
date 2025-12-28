@@ -155,7 +155,7 @@ makepkg -si
 
 ### Applications
 ```bash
-sudo pacman -S btop firefox man smartmontools nm-connection-editor fastfetch
+sudo pacman -S btop firefox man smartmontools nm-connection-editor fastfetch lsof
 yay -S brave-bin google-chrome
 ```
 
