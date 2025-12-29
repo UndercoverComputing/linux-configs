@@ -27,12 +27,12 @@ This lets you make your own changes.
 
 ### Install fonts:
 ```bash
-sudo pacman -S ttf-jetbrains-mono-nerd
+sudo pacman -S ttf-jetbrains-mono-nerd noto-fonts
 ```
 
 Modify sway config:
 ```conf
-font pango:JetBrainsMono Nerd Font Mono 9
+font pango:monospace 10
 ```
 
 ### Terminal
