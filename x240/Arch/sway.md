@@ -80,7 +80,7 @@ Configure sway to start using that as the launcher:
 set $menu wmenu-run -- # Comment out this line
 
 # Put those lines below the commented out one
-for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 1
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 40 ppt 60 ppt, border pixel 1
 set $menu exec $term --class=launcher -e /usr/bin/sway-launcher-desktop
 ```
 
