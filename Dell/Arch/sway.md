@@ -188,9 +188,9 @@ input * {
 }
 ```
 
-### PCMan File Manager
+### Thunar File Manager
 ```bash
-sudo pacman -S pcmanfm
+sudo pacman -S thunar
 ```
 
 ### GNOME Keyring
