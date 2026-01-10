@@ -224,12 +224,7 @@ Inside Arch, prepare secure boot:
 sudo pacman -Syu sbctl
 ```
 
-### 2. Install refind
-```bash
-sudo refind-install
-```
-
-### 3. Create and enroll keys
+### 2. Create and enroll keys
 ```bash
 sudo chattr -i /sys/firmware/efi/efivars/*
 ```
@@ -239,12 +234,12 @@ sudo sbctl create-keys
 sudo sbctl enroll-keys -m
 ```
 
-### 4. Show EFI images
+### 3. Show EFI images
 ```bash
 sudo sbctl verify
 ```
 
-### 5. Sign all EFI binaries
+### 4. Sign all EFI binaries
 Sign all the images from the previous command:
 ```bash
 sudo sbctl sign /boot/EFI/BOOT/BOOTX64.EFI
