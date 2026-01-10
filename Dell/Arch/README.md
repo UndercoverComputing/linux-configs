@@ -142,7 +142,7 @@ Uncomment `%wheel ALL=(ALL:ALL) ALL` and save the changes with CTRL + O and CTRL
 ### Setup Timezone/Region
 ```bash
 ln -sf /usr/share/zoneinfo/Pacific/Auckland /etc/localtime
-sudo timedatectl set-timezone Pacific/Auckland
+timedatectl set-timezone Pacific/Auckland
 timedatectl set-ntp true
 ```
 
@@ -180,7 +180,7 @@ echo "Precision5540" >> /etc/hostname
    linux   /vmlinuz-linux-lts
    initrd  /intel-ucode.img
    initrd  /initramfs-linux-lts.img
-   options rd.luks.name=<UUID-of-nvme01np5>=cryptroot root=/dev/mapper/cryptroot rw mem_sleep=deep intel_iommu=on iommu=pt quiet loglevel=0 rd.systemd.show_status=auto rd.udev.log_priority=0 vt.global_cursor_default=0 splash
+   options rd.luks.name=<UUID-of-nvme01np6>=cryptroot root=/dev/mapper/cryptroot rw mem_sleep=deep intel_iommu=on iommu=pt quiet loglevel=0 rd.systemd.show_status=auto rd.udev.log_priority=0 vt.global_cursor_default=0 splash
    ```
 
 3. loader.conf:
@@ -265,3 +265,10 @@ It must show ZERO unsigned files.
 ```bash
 sudo dmesg | grep -i secure
 ```
+
+## Step 9 - BitLocker
+
+1. Boot into Windows
+2. Enable BitLocker
+
+Rember to backup the BitLocker key
