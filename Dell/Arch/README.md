@@ -1,65 +1,136 @@
 # Precision 5540
 ## Goals:
-- Boot Windows and Arch
+- Boot Windows 11 and Arch
+- BitLocker on Windows
+- Disk encryption on Arch
+- Working secure boot
 
 # Installation
-### First steps:
-```
+## Step 1 - BIOS:
+
+* Ensure Secure Boot is **disabled**
+
+## Step 2 - Windows:
+
+### Install Windows:
+1. Install Windows 11:
+    - Run the intaller  
+    - Create a partition of 64GB  
+    - Install
+2. Update
+
+### Verify Windows is correct:
+From `msinfo32`:
+* BIOS Mode: **UEFI**
+* Secure Boot State: **Off** (for now)
+
+Ensure there is no BitLocker yet.
+
+That's it for now!
+
+## Step 3 - Arch ISO (UEFI mode)
+
+```bash
 pacman -Sy
 pacman -S archlinux-keyring
 ```
 
-### Partitioning the drive:
-**500GB SSD**
-- I had to reinstall Windows, and shrunk it to around 184GB because the partitions were messy.
+### 1. Ensure Arch booted in UEFI:
+```bash
+ls /sys/firmware/efi/efivars
+```
 
-After that, I had these partitions:
-```bash
-/dev/nvme0n1p1 - 100M EFI System
-/dev/nvme0n1p2 - 16M Microsoft reserved
-/dev/nvme0n1p3 - 179.1GB Microsoft basic data
-/dev/nvme0n1p4 - 509M Windows recovery environment
-```
-- I created the following Linux partitions:
-```bash
-/dev/nvme0n1p5 - 1G EFI System
-/dev/nvme0n1p6 - 16G Linux swap
-/dev/nvme0n1p7 - 200G Linux filesystem (/home)
-/dev/nvme0n1p8 - 64G Linux filesystem (Arch root)
-```
-- Formatting the partitions:
+### 2. Create Linux partition
+
+Create a second EFI partition:
+* Size: **1G**
+* Type: **EFI System**
+
+Create a partition using all the free space:
+* Type: **Linux Filesystem**
+
+### 3. Encrypt Arch partition (LUKS2)
 ```bash
 mkfs.fat -F32 -n EFI /dev/nvme0n1p5
-mkswap -L swap /dev/nvme0n1p6
-mkfs.ext4 -L home /dev/nvme0n1p7
-mkfs.ext4 -L Arch /dev/nvme0n1p8
-```
-- Mounting the partitions:
-```bash
-mount /dev/nvme0n1p8 /mnt
-mkdir /mnt/boot /mnt/home
-mount /dev/nvme0n1p5 /mnt/boot
-mount /dev/nvme0n1p7 /mnt/home
-swapon /dev/nvme0n1p6
-```
-### Installing the base system
-```bash
-pacstrap -i /mnt base base-devel linux-lts linux-firmware linux-lts-headers sudo intel-ucode nano git bluez bluez-utils networkmanager brightnessctl
+cryptsetup luksFormat /dev/nvme0n1p6
+cryptsetup open /dev/nvme0n1p6 cryptroot
+mkfs.ext4 /dev/mapper/cryptroot
 ```
 
-### Generate File System Table (FSTAB)
+### 4. Mount filesystems
+```bash
+mount /dev/mapper/cryptroot /mnt
+mount --mkdir /dev/nvme0n1p5 /mnt/boot
+```
+
+### 5. Install base Arch system
+```bash
+pacstrap -i /mnt base base-devel linux-lts linux-firmware linux-lts-headers sudo intel-ucode nano git bluez bluez-utils networkmanager brightnessctl cryptsetup efibootmgr
+```
+Generate fstab:
 ```bash
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-
-### CHROOT To Newley Installed system
+Chroot:
 ```bash
 arch-chroot /mnt
 ```
-![alt text](Arch-Chroot-800x144.webp)
 
-Change root password with `passwd` then add a new user with this command:
+### 6. Setup swap space
+
+**Create swapfile:**
 ```bash
+fallocate -l 2G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+```
+
+**Verify swap:**
+```bash
+swapon --show
+```
+
+**Make persistent:**
+1. Open fstab:
+    ```bash
+    nano /etc/fstab
+    ```
+
+2. Add:
+    ```
+    /swapfile none swap defaults 0 0
+    ```
+
+**Tune swappiness:**
+1. Create:
+    ```bash
+    nano /etc/sysctl.d/99-swappiness.conf
+    ```
+
+2. Add:
+    ```conf
+    vm.swappiness=10
+    ```
+
+### 7. Configure LUKS boot support
+1. `/etc/mkinitcpio.conf` --> Add `sd-encrypt` to HOOKS before `filesystems`
+
+2. Remove file not found error (https://bbs.archlinux.org/viewtopic.php?id=310236):
+```bash
+echo "#KEYMAP=us" > /etc/vconsole.conf
+```
+
+3. Recreate the initramfs image:
+```bash
+mkinitcpio -P
+```
+
+## Step 4 -  Arch setup
+
+Change root password with `passwd` then add a new user:
+```bash
+passwd
 useradd -m -g users -G wheel,storage,video,audio -s /bin/bash USER_NAME
 passwd USER_NAME
 ```
@@ -79,7 +150,7 @@ timedatectl set-ntp true
 ```bash
 nano /etc/locale.gen
 ```
-Uncomment `en_US.UTF-8 UTF-8`
+Uncomment `en_US.UTF-8`
 
 Generate locale file:
 ```bash
@@ -92,26 +163,43 @@ echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo "Precision5540" >> /etc/hostname
 ```
 
-### Add boot entry to bios
-Install the required services:
-```bash
-sudo pacman -S efibootmgr
-```
+### Bootloader installation
+1. Install systemd-boot:
+   ```bash
+   bootctl install
+   ```
 
-Get the PARTUUID for `/` (`/dev/nvme0n1p8`):
-```bash
-lsblk -o NAME,FSTYPE,UUID,PARTUUID
-```
+2. Create Arch’s boot entry:
+   ```bash
+   nano /boot/loader/entries/arch.conf
+   ```
 
-Create an entry:
-```bash
-sudo efibootmgr --create --disk /dev/nvme0n1 --part 5 \
-  --label "Arch Linux" \
-  --loader '\vmlinuz-linux-lts' \
-  --unicode "root=PARTUUID=YOUR-ROOT-PARTUUID rw mem_sleep=deep intel_iommu=on iommu=pt quiet loglevel=0 rd.systemd.show_status=auto rd.udev.log_priority=0 vt.global_cursor_default=0 splash initrd=\intel-ucode.img initrd=\initramfs-linux-lts.img" \
-  --verbose
-```
-Replace `YOUR-ROOT-PARTUUID` with the partuuid of your root partition, and replace `--part 5` with the number of the boot partition (in this case its /dev/nvme0n1p`5`)
+   Contents:
+   ```conf
+   title   Arch Linux
+   linux   /vmlinuz-linux-lts
+   initrd  /intel-ucode.img
+   initrd  /initramfs-linux-lts.img
+   options rd.luks.name=<UUID-of-nvme01np5>=cryptroot root=/dev/mapper/cryptroot rw mem_sleep=deep intel_iommu=on iommu=pt quiet loglevel=0 rd.systemd.show_status=auto rd.udev.log_priority=0 vt.global_cursor_default=0 splash
+   ```
+
+3. loader.conf:
+   ```bash
+   nano /boot/loader/loader.conf
+   ```
+   
+   ```conf
+   default arch
+   timeout 5
+   ```
+
+3. Create EFI entry:
+    ```bash
+    sudo efibootmgr -c -d /dev/nvme0n1 -p 5 \
+    -L "Arch Linux" \
+    -l '\EFI\systemd\systemd-bootx64.efi'
+    ```
+
 
 ### Enable services
 ```bash
@@ -122,123 +210,62 @@ systemctl enable NetworkManager
 ### Exit
 Exit chroot by typing `exit` and unmount the partitions with `umount -lR /mnt`. Reboot with `reboot` and boot into Arch.
 
-## Arch Setup:
+## Step 5 - BIOS secure booy (Audit Mode)
 
-### Yay
+* Secure Boot: **Enabled**
+* Mode: **Audit**
+
+## Step 6 - Sign Arch binaries
+
+Inside Arch, prepare secure boot:
+
+### 1. Install tooling
 ```bash
-mkdir -p ~/repos/AUR/
-cd ~/repos/AUR
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
+sudo pacman -Syu sbctl
 ```
 
-### Applications
+### 2. Install refind
 ```bash
-sudo pacman -S firefox man smartmontools dpkg nm-connection-editor fastfetch
-yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin
+sudo refind-install
 ```
 
-### Plymouth splash
-1. Install plymouth
-   ```bash
-   sudo pacman -S plymouth cantarell-fonts
-   ```
-2. Clone a repo
-   ```bash
-   mkdir plymouth_themes
-   cd plymouth_themes
-   git init
-   git remote add -f origin https://github.com/gevera/plymouth_themes
-   git config core.sparseCheckout true
-   echo "dell/dell10" >> .git/info/sparse-checkout
-   git pull origin master
-   ```
-3. Copy to Plymouth themes
-   ```bash
-   sudo cp -vr dell/dell10 /usr/share/plymouth/themes/
-   sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/dell10/dell10.plymouth 100
-   sudo update-alternatives --config default.plymouth
-   sudo mkinitcpio -P
-   ```
-
-### Disable power button
-1. Edit `/etc/systemd/logind.conf`
-   ```bash
-   sudo nano /etc/systemd/logind.conf
-   ```
-3. Uncomment `HandlePowerKey` and set it to ignore
-   ```bash
-   HandlePowerKey=ignore
-   ```
-
-### Audio
+### 3. Create and enroll keys
 ```bash
-sudo pacman -S pipewire pipewire-pulse pavucontrol
-sudo reboot
-```
+sudo chattr -i /sys/firmware/efi/efivars/*
 
-### Flatpak:
 ```bash
-sudo pacman -S flatpak
-sudo reboot
+sudo sbctl create-keys
+sudo sbctl enroll-keys -m
 ```
 
-### NVIDIA Drivers
+### 4. Show EFI images
 ```bash
-sudo pacman -S --needed linux-lts-headers
-sudo pacman -S --needed nvidia-dkms nvidia-utils nvidia-settings nvidia-prime
-sudo mkinitcpio -P
-sudo reboot
+sudo sbctl verify
 ```
 
-### lm_sensors
+### 5. Sign all EFI binaries
+Sign all the images from the previous command:
 ```bash
-sudo pacman -S lm_sensors
-sudo sensors-detect
+sudo sbctl sign /boot/EFI/BOOT/BOOTX64.EFI
+sudo sbctl sign /boot/EFI/systemd/systemd-bootx64.efi
+sudo sbctl sign /boot/vmlinuz-linux
+sudo sbctl sign /boot/vmlinuz-linux-lts
 ```
 
-### powertop
+### Verify:
 ```bash
-sudo pacman -S powertop
-sudo powertop
+sudo sbctl verify
 ```
 
-### Portal
-1. Install `xdg`
+It must show ZERO unsigned files.
+
+## Step 7 - BIOS secure boot (Deployed)
+
+* Secure Boot: **Enabled**
+* Mode: **Deployed**
+
+## Step 8 - Verify secure boot
+
 ```bash
-sudo pacman -S xdg-utils xdg-desktop-portal-wlr xdg-desktop-portal xdg-desktop-portal-gtk
+sudo dmesg | grep -i secure
 ```
-
-2. Create a file called `~/.config/mimeapps.list`
-```conf
-[Default Applications]
-text/plain=code.desktop
-inode/directory=pcmanfm.desktop
-image/png=imv.desktop
-application/pdf=firefox.desktop
-x-scheme-handler/http=firefox.desktop
-x-scheme-handler/https=firefox.desktop
-```
-[View full file](https://raw.githubusercontent.com/UndercoverComputing/linux-configs/refs/heads/main/Dell/Arch/.config/mimeapps.list)
-
-### Wine
-Install Wine:
-```bash
-sudo pacman -Syu wine
-```
-
-### SMB:
-Install `gvfs-smb`
-```bash
-sudo pacman -S gvfs-smb
-```
-
-In PCMan, open `smb://xxx.xxx.xxx.xxx/`
-
-### Windows VM
-[Instruction link](https://github.com/UndercoverComputing/linux-configs/blob/main/Dell/Arch/Windows-VM.md)
-
-### Modrinth
-1. Install FUSE: `sudo pacman -S fuse`
-2. Edit the Modrinth desktop entry `/usr/share/applications/modrinth-app.desktop` and add `prime-run ` before `modrinth-app` in the `Exec` line.
