@@ -232,6 +232,7 @@ sudo refind-install
 ### 3. Create and enroll keys
 ```bash
 sudo chattr -i /sys/firmware/efi/efivars/*
+```
 
 ```bash
 sudo sbctl create-keys
