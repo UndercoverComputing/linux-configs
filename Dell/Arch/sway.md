@@ -25,7 +25,7 @@ This lets you make your own changes.
 
 ---
 
-### Install fonts:
+## Install fonts:
 ```bash
 sudo pacman -S ttf-jetbrains-mono-nerd
 ```
@@ -34,6 +34,10 @@ Modify sway config:
 ```conf
 font pango:JetBrainsMono Nerd Font Mono 9
 ```
+
+
+## Get keys:
+Use `wev` to find out what a key is.
 
 ## SwayFX-Specific Features
 
@@ -318,9 +322,6 @@ dbus-send --session --dest=org.kde.GtkConfig \
     --type=method_call /GtkConfig org.kde.GtkConfig.setGtkTheme \
     "string:Breeze-dark-gtk"
 ```
-
-### Get keys:
-Use `wev` to find out what a key is.
 
 ## Start sway on login
 
