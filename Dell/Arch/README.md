@@ -65,7 +65,7 @@ mount --mkdir /dev/nvme0n1p5 /mnt/boot
 
 ### 5. Install base Arch system
 ```bash
-pacstrap -i /mnt base base-devel linux-lts linux-firmware linux-lts-headers sudo intel-ucode nano git bluez bluez-utils networkmanager brightnessctl cryptsetup efibootmgr
+pacstrap -i /mnt base base-devel linux-lts linux-firmware linux-lts-headers sudo intel-ucode nano git wget bluez bluez-utils networkmanager brightnessctl cryptsetup efibootmgr
 ```
 Generate fstab:
 ```bash
