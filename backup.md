@@ -5,7 +5,7 @@
 **Mount:**
 
 ```bash
-sudo mount -o uid=1000,gid=984,umask=022 /dev/sdb1 /mnt/usb
+sudo mount -o uid=XXXX,gid=XXX,umask=022 /dev/sdX1 /mnt/usb
 ```
 
 Replace `1000` with your user id and `984` with the group id.

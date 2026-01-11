@@ -1,0 +1,8 @@
+{
+    "format": " {output}°C",
+    "exec": "sensors | awk '/Package id 0:/ {print int($4)}'",
+    "interval": 5,
+    "tooltip": true,
+    "tooltip-format": "CPU Temp: {output}°C",
+    "max-length": 8
+}

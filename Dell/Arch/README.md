@@ -272,3 +272,7 @@ sudo dmesg | grep -i secure
 2. Enable BitLocker
 
 Rember to backup the BitLocker key
+
+## Step 10 - Setup Arch
+
+Next steps: [setup.md](https://github.com/UndercoverComputing/linux-configs/blob/main/Dell/Arch/setup.md)
