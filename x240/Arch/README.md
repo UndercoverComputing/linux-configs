@@ -237,7 +237,7 @@ sudo pacman -S xdg-utils xdg-desktop-portal-wlr xdg-desktop-portal xdg-desktop-p
 ```conf
 [Default Applications]
 text/plain=code.desktop
-inode/directory=pcmanfm.desktop
+inode/directory=thunar.desktop
 image/png=imv.desktop
 application/pdf=firefox.desktop
 x-scheme-handler/http=firefox.desktop
