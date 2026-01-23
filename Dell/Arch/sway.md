@@ -323,6 +323,32 @@ dbus-send --session --dest=org.kde.GtkConfig \
     "string:Breeze-dark-gtk"
 ```
 
+### Gamma
+```bash
+sudo pacman -S gammastep
+mkdir -p ~/.config/gammastep
+nano ~/.config/gammastep/config.ini
+```
+
+`~/.config/gammastep/config.ini`:
+```ini
+[general]
+adjustment-method=wayland
+temp-day=3200
+temp-night=3200
+fade=0
+location-provider=manual
+
+[manual]
+lat=0
+lon=0
+```
+
+`~/.config/sway/config`:
+```conf
+exec_always --no-startup-id gammastep
+```
+
 ## Start sway on login
 
 Add this to the top of `~/.bash_profile`:
