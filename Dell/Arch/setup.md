@@ -11,7 +11,7 @@ makepkg -si
 
 ### Applications
 ```bash
-sudo pacman -S firefox man smartmontools dpkg nm-connection-editor fastfetch rsync kdiskmark
+sudo pacman -S firefox man smartmontools dpkg nm-connection-editor fastfetch rsync kdiskmark ntfs-3g
 yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin
 ```
 
