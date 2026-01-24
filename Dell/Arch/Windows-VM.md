@@ -25,10 +25,10 @@ Reboot and start it with `virt-manager`
     - CPU Mode: Go to Processor -> CPU Model, choose Host-passthrough.
 
 2. On Arch:
-   Install mesa + virgl:
+   Install dependancies:
 
    ```bash
-   sudo pacman -S mesa virglrenderer virt-viewer spice-vdagent
+   sudo pacman -S mesa virt-viewer spice-vdagent
    ```
 
 3. On Windows:
