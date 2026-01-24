@@ -77,3 +77,6 @@ Reboot and start it with `virt-manager`
     b) Open `services.msc` and modify `VirtIO-FS Service`  
     c) Start VirtIO-FS Service  
     d) Change **Startup Type** to **Automatic**  
+
+
+https://www.youtube.com/watch?v=UCy25VFMJCE
