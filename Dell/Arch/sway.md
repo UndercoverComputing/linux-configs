@@ -3,7 +3,7 @@
 
 ```bash
 yay -S swayfx swaylock-effects swayidle wayfreeze-git p7zip-gui sway-launcher-desktop
-sudo pacman -S ttf-jetbrains-mono-nerd alacritty fzf ttf-font-awesome debugedit thunar polkit polkit-gnome swaybg waybar xorg-xwayland xdg-utils fakeroot mpv imv imagemagick gnome-keyring libsecret grim slurp wl-clipboard wf-recorder jq swayimg
+sudo pacman -S ttf-jetbrains-mono-nerd alacritty fzf ttf-font-awesome debugedit thunar polkit polkit-gnome swaybg waybar xorg-xwayland xdg-utils fakeroot mpv imv imagemagick gnome-keyring libsecret grim slurp wl-clipboard wf-recorder jq swayimg mousepad
 ```
 
 You can start the UI manually (don’t do this yet):
