@@ -349,6 +349,60 @@ lon=0
 exec_always --no-startup-id gammastep
 ```
 
+### Toggle desktops
+
+1. Mouse side button handler for page forward (`button9`):
+`~/.config/sway/scripts/button9_handler.sh`:
+```bash
+#!/bin/bash
+
+STATE_FILE="/tmp/sway_button9_count"
+TIME_FILE="/tmp/sway_button9_time"
+
+MAX_DELAY=0.5
+
+now=$(date +%s.%N)
+
+count=0
+last_time=0
+
+[ -f "$STATE_FILE" ] && count=$(cat "$STATE_FILE")
+[ -f "$TIME_FILE" ] && last_time=$(cat "$TIME_FILE")
+
+diff=$(echo "$now - $last_time" | bc)
+
+if (( $(echo "$diff < $MAX_DELAY" | bc -l) )); then
+    count=$((count+1))
+else
+    count=1
+fi
+
+echo "$count" > "$STATE_FILE"
+echo "$now" > "$TIME_FILE"
+
+if [ "$count" -ge 3 ]; then
+    rm -f "$STATE_FILE" "$TIME_FILE"
+    ~/.config/sway/scripts/toggle_desktop.sh
+else
+    # normal forward action
+    wtype -k XF86Forward
+fi
+```
+
+2. Script to change desktops:
+`~/.config/sway/scripts/toggle_desktop.sh`:
+```
+#!/bin/sh
+
+current=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused).num')
+
+if [ "$current" = "1" ]; then
+    swaymsg workspace 2
+else
+    swaymsg workspace 1
+fi
+```
+
 ## Start sway on login
 
 Add this to the top of `~/.bash_profile`:
