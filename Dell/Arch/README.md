@@ -14,7 +14,7 @@
 
 ### Install Windows:
 1. Install Windows 11:
-    - Run the intaller  
+    - Run the installer  
     - Create a partition of 64GB  
     - Install
 2. Update
