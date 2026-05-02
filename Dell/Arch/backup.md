@@ -10,5 +10,8 @@
 ~/.config/waybar
 ~/.bashrc
 ~/.bash_profile
+~/Downloads
+~/Pictures
+~/Videos
 /etc/NetworkManager/system-connections/
 ```
