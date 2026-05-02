@@ -1,16 +1,8 @@
-# SwayFX installation
+# Sway
+## Install Sway
 
 ```bash
-yay -S swayfx swaylock-effects swayidle wayfreeze-git p7zip-gui sway-launcher-desktop
-sudo pacman -S ttf-jetbrains-mono-nerd alacritty fzf ttf-font-awesome debugedit thunar thunar-archive-plugin xarchiver polkit polkit-gnome swaybg waybar xorg-xwayland xdg-utils fakeroot mpv imv imagemagick gnome-keyring libsecret grim slurp wl-clipboard wf-recorder jq swayimg mousepad
-```
-
-# SwayFX documentation
-## Install SwayFX
-
-```bash
-yay -S swayfx swaylock-effects swayidle wayfreeze-git p7zip-gui sway-launcher-desktop
-sudo pacman -S ttf-jetbrains-mono-nerd alacritty fzf ttf-font-awesome debugedit thunar thunar-archive-plugin xarchiver polkit polkit-gnome swaybg waybar xorg-xwayland xdg-utils fakeroot mpv imv imagemagick gnome-keyring libsecret grim slurp wl-clipboard wf-recorder jq swayimg mousepad
+sudo apt install sway swayidle swaybg waybar xwayland xdg-utils alacritty fish fzf fonts-font-awesome fonts-jetbrains-mono thunar pkexec polkitd mpv imv imagemagick gnome-keyring libsecret-1-0 grim slurp wl-clipboard wf-recorder jq mousepad file-roller p7zip-full gawk brightnessctl
 ```
 
 You can start the UI manually (don’t do this yet):
@@ -34,7 +26,11 @@ This lets you make your own changes.
 
 ## Install fonts:
 ```bash
-sudo pacman -S ttf-jetbrains-mono-nerd
+wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip \
+&& cd ~/.local/share/fonts \
+&& unzip JetBrainsMono.zip \
+&& rm JetBrainsMono.zip \
+&& fc-cache -fv
 ```
 
 Modify sway config:
@@ -57,7 +53,7 @@ Using a `~/.config/sway/swayfx.conf`
 Install your preferred terminal emulator (foot, alacritty, whatever you want), I use alacritty:
 
 ```bash
-sudo pacman -S alacritty
+sudo apt install alacritty
 ```
 
 Then edit your config file and change the terminal executable
@@ -77,6 +73,9 @@ I have my terminal windows a bit transparent:
 ```conf
 [window]
 opacity = 0.85
+
+[terminal.shell]
+program = '/usr/bin/fish'
 ```
 
 Changes should be visible immediately.
@@ -86,8 +85,7 @@ Changes should be visible immediately.
 Install dependencies, then install sway launcher:
 
 ```bash
-sudo pacman -S fzf ttf-font-awesome debugedit
-yay -S sway-launcher-desktop
+git clone https://github.com/biont/sway-launcher-desktop.git ~/.config/sway-launcher-desktop
 ```
 
 Configure sway to start using that as the launcher:
@@ -98,7 +96,7 @@ set $menu wmenu-run -- # Comment out this line
 
 # Put those lines below the commented out one
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
-set $menu exec $term --class=launcher -e /usr/bin/sway-launcher-desktop
+set $menu exec $term --class=launcher -e ~/.config/sway-launcher-desktop/sway-launcher-desktop.sh
 ```
 
 ### Lockscreen
@@ -201,7 +199,7 @@ input * {
 
 ### Thunar File Manager
 ```bash
-sudo pacman -S thunar thunar thunar-archive-plugin
+sudo pacman -S thunar
 ```
 
 ### GNOME Keyring

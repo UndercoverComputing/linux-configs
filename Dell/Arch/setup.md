@@ -102,7 +102,9 @@ x-scheme-handler/https=firefox.desktop
 ### Wine
 Install Wine:
 ```bash
-sudo pacman -Syu wine
+sudo pacman -Syu wine winetricks zenity
+winetricks corefonts
+winetricks fontsmooth-rgb
 ```
 
 ### SMB:
@@ -119,3 +121,21 @@ In Thunar, open `smb://xxx.xxx.xxx.xxx/`
 ### Modrinth
 1. Install FUSE: `sudo pacman -S fuse`
 2. Edit the Modrinth desktop entry `/usr/share/applications/modrinth-app.desktop` and add `prime-run ` before `modrinth-app` in the `Exec` line.
+
+### Steam
+
+Enable mirror:
+```bash
+sudo nano /etc/pacman.conf
+```
+
+Uncomment these **2 lines**:
+```conf
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+```
+
+Then install:
+```bash
+sudo pacman -Syu steam
+```
