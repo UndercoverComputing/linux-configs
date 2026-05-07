@@ -26,4 +26,16 @@ sudo systemctl enable --now syncthing@user
     b) Use **quick://vpn-ip:22000**
 
 4. Add a folder:
-    a) When the folder is sharde, ensure **Ignore Permissions** is checked.
+    a) When the folder is shared, ensure **Ignore Permissions** is checked.
+
+## Backup dotfiles
+
+### Linux:
+
+1. Create a shared folder and change the **Folder Type** to **Send Only**.
+
+### Windows:
+
+1. Add the folder
+2. Change the **Folder Type** to **Recieve Only**.
+3. Use **Staggered File Versioning**.
