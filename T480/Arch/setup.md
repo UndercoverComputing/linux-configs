@@ -39,12 +39,43 @@ sudo fwupdmgr update
    ```
 
 ## Fish
+
+1. Install fish
 ```bash
 sudo pacman -S fish
 fish
 ```
 
-bash profile instructions
+2. Create a gradient in `~/.config/fish/config.fish`:
+```bash
+function fish_prompt
+    set_color f74b4b; printf u
+    set_color ef4646; printf s
+    set_color e74141; printf e
+    set_color df3c3c; printf r
+    set_color d73737; printf @
+    set_color cf3232; printf T
+    set_color c72d2d; printf h
+    set_color bf2828; printf i
+    set_color b72727; printf n
+    set_color af1e1e; printf k
+    set_color a71919; printf p
+    set_color 9f1414; printf a
+    set_color 970f0f; printf d
+    set_color 8f0a0a; printf T
+    set_color 870505; printf 4
+    set_color 7f0000; printf 8
+    set_color 780000; printf 0
+
+    set_color normal
+    printf " "
+
+    set_color white
+    printf "%s" (prompt_pwd)
+
+    printf ' $ '
+end
+```
 
 ## Applications
 ```bash
