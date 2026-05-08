@@ -53,6 +53,44 @@ yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin ipscan-bi
 reboot
 ```
 
+## Power / battery settings
+
+1. Install TLP:
+```bash
+sudo pacman -S tlp
+```
+
+2. Enable TLP:
+```bash
+sudo systemctl enable --now tlp.service
+```
+
+3. Configure TLP:
+```bash
+sudo mv /etc/tlp.conf /etc/tlp.conf.bak
+```
+
+4. Create `/etc/tlp.conf` and add these lines:
+```ini
+# Charing thresholds
+START_CHARGE_THRESH_BAT0=10
+STOP_CHARGE_THRESH_BAT0=90
+START_CHARGE_THRESH_BAT1=5
+STOP_CHARGE_THRESH_BAT1=95
+
+# other stuff
+CPU_SCALING_GOVERNOR_ON_BAT=powersave
+CPU_ENERGY_PERF_POLICY_ON_BAT=balance_power
+USB_AUTOSUSPEND=1
+```
+
+5. Apply changes:
+```bash
+sudo tlp start
+```
+
+Check status with `sudo tlp-stat -b`.
+
 ## Fingerprint reader
 
 1. Install open-fprintd and python-validity
