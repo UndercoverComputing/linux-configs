@@ -104,9 +104,9 @@ sudo mv /etc/tlp.conf /etc/tlp.conf.bak
 4. Create `/etc/tlp.conf` and add these lines:
 ```ini
 # Charing thresholds
-START_CHARGE_THRESH_BAT0=10
+START_CHARGE_THRESH_BAT0=85
 STOP_CHARGE_THRESH_BAT0=90
-START_CHARGE_THRESH_BAT1=5
+START_CHARGE_THRESH_BAT1=90
 STOP_CHARGE_THRESH_BAT1=95
 
 # other stuff
