@@ -79,7 +79,7 @@ end
 
 ## Applications
 ```bash
-sudo pacman -S firefox man smartmontools dpkg fastfetch rsync kdiskmark ntfs-3g remmina freerdp btop stress flatpak hwinfo
+sudo pacman -S firefox man smartmontools dpkg fastfetch rsync kdiskmark ntfs-3g remmina freerdp btop stress flatpak hwinfo dosfstools
 yay -S brave-bin google-chrome modrinth-app-bin visual-studio-code-bin ipscan-bin jre25-openjdk
 reboot
 ```
